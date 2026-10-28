@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pondok Pesantren Syubbanul Wathon</title>
+    <link rel="icon" type="image/png" href="assets/logo sw.png">
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-day">
+
+    <!-- Top Bar Info & Dinamis -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="time-location">
+                <span id="time-badge" class="badge"><i class="fa-regular fa-sun"></i> Selamat Datang</span>
+                <span class="divider">|</span>
+                <span id="location-text"><i class="fa-solid fa-location-dot"></i> Mendeteksi Lokasi...</span>
+            </div>
+            <div class="top-contact">
+                <span><i class="fa-solid fa-phone"></i> (0298) 321-789</span>
+                <span class="divider">|</span>
+                <span><i class="fa-solid fa-envelope"></i> info@syubbanulwathon.sch.id</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="brand">
+                <div class="brand-logo">
+                    <img src="assets/YAYASAN-SYUBBANUL-WATHON-cmp-scaled.png" alt="Logo Syubbanul Wathon" style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">SYUBBANUL WATHON</span>
+                    <span class="brand-sub">Pondok Pesantren & Lembaga Pendidikan</span>
+                </div>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#beranda" class="nav-link active">Beranda</a>
+                <a href="#lembaga" class="nav-link">Lembaga</a>
+                <a href="#jadwal-sholat" class="nav-link">Jadwal Sholat</a>
+                <a href="#doa-harian" class="nav-link">Doa Harian</a>
+                <a href="#galeri" class="nav-link">Galeri</a>
+                <a href="#kontak" class="btn-primary">Pendaftaran</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero">
+        <div class="container hero-content">
+            <span class="hero-tag">Pendidikan Berbasis Akhlaqul Karimah & Teknologi</span>
+            <h1 class="hero-title">Mencetak Generasi Rabbani, Unggul, dan Berdaya Saing Global</h1>
+            <p class="hero-desc">Pondok Pesantren Syubbanul Wathon menyelenggarakan pendidikan terpadu mencakup SMP, MTs, SMA, SMK Kejuruan, dan MA dengan kurikulum pesantren modern.</p>
+            <div class="hero-buttons">
+                <a href="#lembaga" class="btn-primary-lg">Eksplorasi Pendidikan <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#jadwal-sholat" class="btn-outline-lg"><i class="fa-solid fa-clock"></i> Cek Jadwal Sholat</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jadwal Sholat Section -->
+    <section id="jadwal-sholat" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle"><i class="fa-solid fa-kaaba"></i> Waktu Ibadah</span>
+                <h2 class="section-title">Jadwal Sholat Hari Ini</h2>
+                <p id="prayer-location-sub" class="section-desc">Menampilkan waktu sholat presisi berdasarkan lokasi Anda</p>
+            </div>
+            <div class="prayer-grid">
+                <div class="prayer-card" id="card-subuh">
+                    <div class="prayer-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+                    <h3>Subuh</h3>
+                    <p class="prayer-time" id="time-subuh">04:15 WIB</p>
+                </div>
+                <div class="prayer-card" id="card-dzuhur">
+                    <div class="prayer-icon"><i class="fa-solid fa-sun"></i></div>
+                    <h3>Dzuhur</h3>
+                    <p class="prayer-time" id="time-dzuhur">11:35 WIB</p>
+                </div>
+                <div class="prayer-card" id="card-ashar">
+                    <div class="prayer-icon"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+                    <h3>Ashar</h3>
+                    <p class="prayer-time" id="time-ashar">14:48 WIB</p>
+                </div>
+                <div class="prayer-card" id="card-maghrib">
+                    <div class="prayer-icon"><i class="fa-solid fa-moon"></i></div>
+                    <h3>Maghrib</h3>
+                    <p class="prayer-time" id="time-maghrib">17:42 WIB</p>
+                </div>
+                <div class="prayer-card" id="card-isya">
+                    <div class="prayer-icon"><i class="fa-regular fa-star"></i></div>
+                    <h3>Isya</h3>
+                    <p class="prayer-time" id="time-isya">18:52 WIB</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doa Harian Section -->
+    <section id="doa-harian" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle"><i class="fa-solid fa-book-quran"></i> Amalan Harian</span>
+                <h2 class="section-title">Doa & Mutiara Hikmah Harian</h2>
+            </div>
+            <div class="dua-box">
+                <div class="dua-header">
+                    <span class="dua-category" id="dua-title">Doa Sebelum Belajar</span>
+                    <button class="btn-icon" id="nextDuaBtn" title="Acak Doa Lainnya"><i class="fa-solid fa-rotate"></i> Ganti Doa</button>
+                </div>
+                <div class="dua-arabic" id="dua-arabic">
+                    رَضِيْتُ بِاللهِ رَبًّا، وَبِالْإِسْلَامِ دِيْنًا، وَبِمُحَمَّدٍ نَبِيًّا وَرَسُوْلًا، رَبِّ زِدْنِيْ عِلْمًا وَارْزُقْنِيْ فَهْمًا
+                </div>
+                <div class="dua-latin" id="dua-latin">
+                    "Rodhitu billahi robba, wa bil-islami dina, wa bi-muhammadin nabiyyaw wa rosula. Robbi zidni 'ilmaw warzuqni fahma."
+                </div>
+                <div class="dua-meaning" id="dua-meaning">
+                    <strong>Artinya:</strong> "Aku ridho Allah sebagai Tuhanku, Islam sebagai agamaku, dan Nabi Muhammad sebagai Nabi dan Rasulku. Ya Allah, tambahkanlah aku ilmu dan berilah aku karunia untuk memahaminya."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lembaga Pendidikan Section -->
+     <!--  
+    <section id="lembaga" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle"><i class="fa-solid fa-graduation-cap"></i> Jenjang Pendidikan</span>
+                <h2 class="section-title">Lembaga Di Bawah Naungan Yayasan</h2>
+                <p class="section-desc">Pilihan jenjang formal terakreditasi yang memadukan kurikulum nasional dan nilai pesantren.</p>
+            </div>
+            <div class="lembaga-grid">
+                
+                <div class="lembaga-card">
+                    <div class="lembaga-badge">Tingkat Menengah Pertama</div>
+                    <div class="lembaga-icon">
+                        <img src="logo-smp.png" alt="Logo SMP" style="width: 70px; height: auto; object-fit: contain;">
+                    </div>
+                    <h3>SMP Syubbanul Wathon</h3>
+                    <p>Fokus pada pembentukan karakter islami, penguasaan sains dasar, serta tahfidz Al-Qur'an jus 30.</p>
+                </div>
+                
+                <div class="lembaga-card">
+                    <div class="lembaga-badge">Tingkat Menengah Pertama</div>
+                    <div class="lembaga-icon">
+                        <img src="logo-mts.png" alt="Logo MTs" style="width: 70px; height: auto; object-fit: contain;">
+                    </div>
+                    <h3>MTs Syubbanul Wathon</h3>
+                    <p>Pendidikan keagamaan mendalam, kitab kuning dasar, bahasa Arab & Inggris terpadu.</p>
+                </div>
+                
+                <div class="lembaga-card">
+                    <div class="lembaga-badge">Tingkat Menengah Atas</div>
+                    <div class="lembaga-icon">
+                        <img src="logo-sma.png" alt="Logo SMA" style="width: 70px; height: auto; object-fit: contain;">
+                    </div>
+                    <h3>SMA Syubbanul Wathon</h3>
+                    <p>Persiapan unggul menuju perguruan tinggi negeri & luar negeri dengan peminatan IPA/IPS.</p>
+                </div>
+                
+                <div class="lembaga-card featured">
+                    <div class="lembaga-badge highlight">Kejuruan Vokasi</div>
+                    <div class="lembaga-icon">
+                        <img src="logo-smk.png" alt="Logo SMK" style="width: 70px; height: auto; object-fit: contain;">
+                    </div>
+                    <h3>SMK Syubbanul Wathon</h3>
+                    <p>Mencetak tenaga ahli siap kerja dengan berbagai jurusan keahlian bernilai jual tinggi di industri.</p>
+                    <a href="#jurusan-smk" class="btn-link">Lihat Jurusan SMK <i class="fa-solid fa-arrow-down"></i></a>
+                </div>
+                
+                <div class="lembaga-card">
+                    <div class="lembaga-badge">Tingkat Menengah Atas</div>
+                    <div class="lembaga-icon">
+                        <img src="logo-ma.png" alt="Logo MA" style="width: 70px; height: auto; object-fit: contain;">
+                    </div>
+                    <h3>MA Syubbanul Wathon</h3>
+                    <p>Kajian ilmu keislaman mendalam (Madrasah Aliyah) bidang Keagamaan, MIPA, dan IPS.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    -->
+    
+    <!-- Sekolahnya ada apa aja (Interactive Modal Cards) -->
+    <section id="lembaga" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle"><i class="fa-solid fa-graduation-cap"></i> Jenjang Pendidikan</span>
+                <h2 class="section-title">Lembaga Di Bawah Naungan Yayasan</h2>
+                <p class="section-desc">Pilihan jenjang formal terakreditasi yang memadukan kurikulum nasional dan nilai pesantren.</p>
+            </div>
+            <div class="jurusan-grid">
+                <!-- Card 1 -->
+                <div class="jurusan-card" onclick="openJurusanModal('SMK')">
+                <div class="jurusan-card-header">
+                    <img src="assets/logosekolah2/SMK-T.png" alt="Logo SMK" style="height: 35px; width: auto; object-fit: contain;">
+                    <span class="jurusan-tag">KEJURAN VOKASI</span>
+                </div>
+                    <h3>SMK Syubbanul Wathon</h3>
+                    <p class="jurusan-sub">Mencetak tenaga ahli siap kerja dengan berbagai jurusan keahlian bernilai tinggi di industri</p>
+                    <div class="jurusan-footer">
+                        <span>Klik untuk Detail</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="jurusan-card" onclick="openJurusanModal('SMA')">
+                    <div class="jurusan-card-header">
+                        <img src="assets/logosekolah2/SMA.png" alt="Logo SMA" style="height: 35px; width: auto; object-fit: contain;">
+                        <span class="jurusan-tag">TINGKAT MENENGAH ATAS</span>
+                    </div>
+                    <h3>SMA Syubbanul Wathon</h3>
+                    <p class="jurusan-sub">Persiapan unggul menuju perguruan tinggi negeri & luar negeri dengan peminatan IPA/IPS</p>
+                    <div class="jurusan-footer">
+                        <span>Klik untuk Detail</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="jurusan-card" onclick="openJurusanModal('SMP')">
+                    <div class="jurusan-card-header">
+                        <img src="assets/logosekolah2/SMP-T.png" alt="Logo SMP" style="height: 35px; width: auto; object-fit: contain;">
+                        <span class="jurusan-tag">TINGKAT MENENGAH PERTAMA</span>
+                    </div>
+                    <h3>SMP Syubbanul Wathon</h3>
+                    <p class="jurusan-sub">Fokus pada pembentukan karakter islami, penguasaan sains dasar, serta tahfidz Al-Qur'an jus 30.</p>
+                    <div class="jurusan-footer">
+                        <span>Klik untuk Detail</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="jurusan-card" onclick="openJurusanModal('MA')">
+                    <div class="jurusan-card-header">
+                        <img src="assets/logosekolah2/EM-MA.png" alt="Logo MA" style="height: 35px; width: auto; object-fit: contain;">
+                        <span class="jurusan-tag">TINGKAT MENENGAH ATAS</span>
+                    </div>
+                    <h3>MA Syubbanul Wathon</h3>
+                    <p class="jurusan-sub">Kajian ilmu keislaman mendalam (Madrasah Aliyah) bidang Keagamaan, MIPA, dan IPS.</p>
+                    <div class="jurusan-footer">
+                        <span>Klik untuk Detail</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="jurusan-card" onclick="openJurusanModal('MTs')">
+                    <div class="jurusan-card-header">
+                        <img src="assets/logosekolah2/logo-mts-newest.png" alt="Logo MTs" style="height: 35px; width: auto; object-fit: contain;">
+                        <span class="jurusan-tag">TINGKAT MENENGAH PERTAMA</span>
+                    </div>
+                    <h3>MTs</h3>
+                    <p class="jurusan-sub">Pendidikan keagamaan mendalam, kitab kuning dasar, bahasa Arab & Inggris terpadu.</p>
+                    <div class="jurusan-footer">
+                        <span>Klik untuk Detail</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+<!-- Galeri Kegiatan Section -->
+    <section id="galeri" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle"><i class="fa-solid fa-camera-retro"></i> Galeri Pesantren</span>
+                <h2 class="section-title">Dokumentasi Kegiatan Santri</h2>
+                <p class="section-desc">Momen-momen berharga dalam keseharian santri di lingkungan Syubbanul Wathon.</p>
+            </div>
+
+            <div class="gallery-wrapper">
+                <!-- Tombol Kiri -->
+                <button class="gallery-btn left" id="slideLeft"><i class="fa-solid fa-chevron-left"></i></button>
+                
+                <!-- Kontainer Gambar Geser -->
+                <div class="gallery-container" id="galleryContainer">
+                    <!-- Item 1 -->
+                    <div class="gallery-item">
+                        <img src="assets/fotosmk/IMG_0061-scaled.jpg" alt="Kegiatan SMK">
+                        <div class="gallery-overlay">Praktik Jurusan SMK</div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="gallery-item">
+                        <img src="assets/fotosmk/IMG_3537-2048x1365.jpg" alt="Kegiatan SMA">
+                        <div class="gallery-overlay">Kegiatan Akademik SMA</div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="gallery-item">
+                        <img src="assets/foto m/DSC04055-min-1024x683.jpg" alt="Kegiatan SMP">
+                        <div class="gallery-overlay">Keseharian Santri SMP</div>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="gallery-item">
+                        <img src="assets/foto m/jurnalistik.jpg" alt="Kegiatan MA">
+                        <div class="gallery-overlay">Kajian Kitab MA</div>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="gallery-item">
+                        <img src="assets/foto m/DSC08087-min-1024x683.jpg" alt="Kegiatan MTs">
+                        <div class="gallery-overlay">Kegiatan Ekstrakurikuler MTs</div>
+                    </div>
+                </div>
+
+                <!-- Tombol Kanan -->
+                <button class="gallery-btn right" id="slideRight"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Pop-up Jurusan Detail -->
+    <div class="modal" id="jurusanModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeJurusanModal()">&times;</button>
+            <div class="modal-body">
+                <!-- Tambahan Tag FOTO untuk Pop Up -->
+                <img id="m-image" src="" alt="Foto Jurusan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; display: none;">
+                
+                <div class="modal-icon" id="m-icon"><i class="fa-solid fa-code"></i></div>
+                <h3 id="m-title">Detail Jurusan</h3>
+                <p id="m-subtitle" class="modal-sub">Sub Judul Jurusan</p>
+                <hr class="modal-divider">
+                
+                <h4><i class="fa-solid fa-list-check"></i> Yang Dipelajari:</h4>
+                <p id="m-desc">Deskripsi pelajaran di jurusan ini...</p>
+
+                <h4><i class="fa-solid fa-briefcase"></i> Prospek Karir:</h4>
+                <ul id="m-prospects" class="prospects-list">
+                    <!-- Dynamic Items -->
+                </ul>
+
+                <div class="modal-actions">
+                    <a href="#kontak" class="btn-primary" onclick="closeJurusanModal()">Daftar Jurusan Ini</a>
+                    <button class="btn-secondary" onclick="closeJurusanModal()">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="kontak" class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <div class="brand-logo">
+                    <img src="assets/YAYASAN-SYUBBANUL-WATHON-cmp-scaled.png" alt="Logo Syubbanul Wathon" style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;">
+                </div>
+                <h3>SYUBBANUL WATHON</h3>
+                <p>Mencetak generasi santri yang mandiri, berilmu, bertakwa, dan berjiwa kepemimpinan tinggi.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigasi Cepat</h4>
+                <ul>
+                    <li><a href="#beranda">Beranda</a></li>
+                    <li><a href="#lembaga">Lembaga Pendidikan</a></li>
+                    <li><a href="#jadwal-sholat">Jadwal Sholat</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Kontak Informasi</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Jl. Raya Pesantren No. 45, Salatiga, Jawa Tengah</p>
+                <p><i class="fa-solid fa-phone"></i> +62 812-3456-7890</p>
+                <p><i class="fa-solid fa-envelope"></i> sekretariat@syubbanulwathon.sch.id</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Pondok Pesantren Syubbanul Wathon. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
