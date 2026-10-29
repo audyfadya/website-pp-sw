@@ -762,3 +762,45 @@ body.theme-day {
 @media (max-width: 768px) {
     .gallery-btn { display: none; }
 }
+
+
+/* Perbaikan Khusus Mobile (Layar HP) */
+@media (max-width: 768px) {
+    /* 1. Merapikan Top Bar (Jam, Lokasi, Kontak) */
+    .top-bar-content {
+        flex-direction: column; /* Mengubah susunan menjadi vertikal/ke bawah */
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .time-location, .top-contact {
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    
+    .divider {
+        display: none; /* Menyembunyikan garis pemisah vertikal "|" di layar sempit */
+    }
+
+    /* 2. Merapikan Judul Syubbanul Wathon di Navbar */
+    .brand {
+        max-width: 85%; /* Membatasi lebar agar tidak menabrak tombol menu */
+    }
+    
+    .brand-title {
+        font-size: 1rem; /* Mengecilkan teks judul utama */
+    }
+    
+    .brand-sub {
+        font-size: 0.65rem; /* Mengecilkan teks sub-judul */
+        white-space: normal; /* Mengizinkan teks turun ke baris baru jika terlalu panjang */
+        line-height: 1.2;
+    }
+    
+    .brand-logo {
+        width: 35px; /* Mengecilkan logo sedikit */
+        height: 35px;
+    }
+}
