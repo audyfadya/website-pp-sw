@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran Santri Baru - Syubbanul Wathon</title>
+    <link rel="icon" type="image/png" href="assets/logo sw.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-day">
+
+    <!-- Header / Navbar Sederhana -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <div class="brand-logo">
+                    <img src="assets/YAYASAN-SYUBBANUL-WATHON-cmp-scaled.png" alt="Logo Syubbanul Wathon" style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">SYUBBANUL WATHON</span>
+                    <span class="brand-sub">Portal Pendaftaran Santri Baru</span>
+                </div>
+            </a>
+            <a href="index.html" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
+        </div>
+    </header>
+
+    <!-- Form Pendaftaran Section -->
+    <section class="section bg-light" style="padding: 50px 0;">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header" style="margin-bottom: 30px;">
+                <span class="section-subtitle"></span>
+                <h2 class="section-title">Formulir Pendaftaran Santri Baru</h2>
+                <p class="section-desc">Silakan lengkapi data diri dan unggah berkas persyaratan dengan benar.</p>
+            </div>
+
+            <div class="dua-box" style="background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow);">
+                <form id="formPendaftaran" onsubmit="handleRegister(event)">
+                    
+                    <!-- Pilihan Jenjang Sekolah -->
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">
+                            <i class="fa-solid fa-school" style="color: var(--primary);"></i> Pilih Jenjang / Sekolah Tujuan *
+                        </label>
+                        <select id="pilihanSekolah" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px;" required onchange="cekPilihanSekolah()">
+                            <option value="">-- Pilih Unit Pendidikan --</option>
+                            <option value="SMK Syubbanul Wathon">SMK Syubbanul Wathon</option>
+                            <option value="SMA Syubbanul Wathon">SMA Syubbanul Wathon</option>
+                            <option value="SMP Syubbanul Wathon">SMP Syubbanul Wathon</option>
+                            <option value="MA Syubbanul Wathon">MA Syubbanul Wathon</option>
+                            <option value="MTs Syubbanul Wathon">MTs Syubbanul Wathon</option>
+                        </select>
+                    </div>
+
+                    <!-- Pilihan Jurusan SMK (Hanya Muncul Jika Pilih SMK) -->
+                    <div id="wrapperJurusan" style="margin-bottom: 20px; display: none; background: var(--primary-light); padding: 15px; border-radius: 8px; border: 1px solid var(--primary);">
+                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark);">
+                            <i class="fa-solid fa-laptop-code"></i> Pilih Program Keahlian (Jurusan SMK) *
+                        </label>
+                        <select id="pilihanJurusan" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;">
+                            <option value="">-- Pilih Jurusan SMK --</option>
+                            <option value="PPLG (Pengembangan Perangkat Lunak & Gim)">PPLG - Pengembangan Perangkat Lunak & Gim</option>
+                            <option value="TJKT (Teknik Jaringan Komputer & Telekomunikasi)">TJKT - Teknik Jaringan Komputer & Telekomunikasi</option>
+                            <option value="DKV (Desain Komunikasi Visual)">DKV - Desain Komunikasi Visual</option>
+                            <option value="TKRO (Teknik Kendaraan Ringan Otomotif)">TKRO - Teknik Kendaraan Ringan Otomotif</option>
+                        </select>
+                    </div>
+
+                    <!-- NISN & NIK (Opsional) -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">NISN *</label>
+                            <input type="text" id="nisn" placeholder="Contoh: 0081234567" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">NIK / No. KK (Opsional)</label>
+                            <input type="text" id="nik" placeholder="Kosongkan jika belum ada" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;">
+                        </div>
+                    </div>
+
+                    <!-- Nama Lengkap & Jenis Kelamin -->
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">Nama Lengkap Calon Santri *</label>
+                            <input type="text" id="namaLengkap" placeholder="Masukkan nama lengkap" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;" required>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">Jenis Kelamin *</label>
+                            <select id="gender" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px;" required>
+                                <option value="">Pilih</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- No HP / WhatsApp -->
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">
+                            <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> No. WhatsApp Aktif (Santri / Orang Tua) *
+                        </label>
+                        <input type="tel" id="noHp" placeholder="Contoh: 081234567890" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;" required>
+                    </div>
+
+                    <!-- Alamat Asal -->
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">Alamat Asal (Desa, Kecamatan, Kabupaten/Kota) *</label>
+                        <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap domisili saat ini" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white; height: auto;" required></textarea>
+                    </div>
+
+                    <!-- Kotak Unggah Dokumen / Berkas -->
+                    <div style="background: var(--gray-100); padding: 20px; border-radius: var(--radius); margin-bottom: 25px; border: 1px dashed var(--primary);">
+                        <h4 style="margin-bottom: 15px; color: var(--primary-dark); font-size: 1rem;">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Unggah Dokumen Persyaratan
+                        </h4>
+                        
+                        <!-- Transkrip Nilai -->
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: var(--dark);">
+                                Transkrip Nilai / Rapor Semester Terakhir * <span style="font-size: 0.75rem; color: var(--gray-600);">(PDF/JPG/PNG)</span>
+                            </label>
+                            <input type="file" id="berkasTranskrip" accept=".pdf,.jpg,.jpeg,.png" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 10px; background: white;" required>
+                        </div>
+
+                        <!-- SKL / Ijazah -->
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: var(--dark);">
+                                SKL / Ijazah * <span style="font-size: 0.75rem; color: var(--gray-600);">(PDF/JPG/PNG)</span>
+                            </label>
+                            <input type="file" id="berkasIjazah" accept=".pdf,.jpg,.jpeg,.png" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 10px; background: white;" required>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Submit -->
+                    <button type="submit" class="btn-primary-lg" style="width: 100%; border: none; cursor: pointer; text-align: center; justify-content: center;">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding: 30px 0;">
+        <div class="container text-center" style="text-align: center;">
+            <p>&copy; 2026 Pondok Pesantren Syubbanul Wathon. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fungsi untuk menampilkan/menyembunyikan pilihan jurusan SMK
+        function cekPilihanSekolah() {
+            const pilihan = document.getElementById('pilihanSekolah').value;
+            const wrapperJurusan = document.getElementById('wrapperJurusan');
+            const selectJurusan = document.getElementById('pilihanJurusan');
+
+            if (pilihan === "SMK Syubbanul Wathon") {
+                wrapperJurusan.style.display = "block";
+                selectJurusan.setAttribute("required", "true"); // Wajib diisi jika pilih SMK
+            } else {
+                wrapperJurusan.style.display = "none";
+                selectJurusan.removeAttribute("required");
+                selectJurusan.value = ""; // Reset pilihan
+            }
+        }
+
+        // Otomatis memilih dropdown sekolah & mendeteksi SMK jika dibuka dari modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sekolahParam = urlParams.get('sekolah');
+            
+            if (sekolahParam) {
+                const selectDropdown = document.getElementById('pilihanSekolah');
+                selectDropdown.value = sekolahParam;
+                cekPilihanSekolah(); // Jalankan fungsi agar kolom jurusan langsung muncul jika dari SMK
+            }
+        });
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const nama = document.getElementById('namaLengkap').value;
+            const sekolah = document.getElementById('pilihanSekolah').value;
+            const jurusan = document.getElementById('pilihanJurusan').value;
+            
+            let pesan = `Terima kasih, ${nama}! Data pendaftaran Anda untuk unit ${sekolah}`;
+            if (sekolah === "SMK Syubbanul Wathon" && jurusan) {
+                pesan += ` dengan pilihan Jurusan (${jurusan})`;
+            }
+            pesan += ` berhasil dikirim. Panitia akan segera menghubungi Anda.`;
+
+            alert(pesan);
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

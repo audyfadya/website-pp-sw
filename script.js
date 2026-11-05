@@ -1,6 +1,6 @@
 // JAVASCRIPT SYUBBANUL WATHON WEBSITE
 
-// Data Detail Jurusan / Lembaga (Deskripsi Lengkap Jurusan, Peminatan, & Keunggulan)
+// --- DATA JURUSAN / LEMBAGA ---
 const dataJurusan = {
     'SMK': {
         title: 'SMK Syubbanul Wathon',
@@ -53,7 +53,6 @@ const dataJurusan = {
             'Penguasaan Dasar Bahasa & Sains'
         ]
     },
-    
     'MA': {
         title: 'MA Syubbanul Wathon',
         subtitle: 'Madrasah Aliyah Keagamaan & Kajian Kitab Kuning',
@@ -70,7 +69,6 @@ const dataJurusan = {
             'Pengajar Pendidikan Agama & Bahasa Arab'
         ]
     },
-
     'MTs': {
         title: 'MTs Syubbanul Wathon',
         subtitle: 'Madrasah Tsanawiyah Terpadu Keagamaan & Muamalah',
@@ -89,48 +87,53 @@ const dataJurusan = {
     }
 };
 
-// Data Doa-Doa Harian (Fix String Kutip)
-const listDoa = [
+// --- DATA CADANGAN LOKAL (Digunakan otomatis jika API Doa mati) ---
+const dataDoaCadangan = [
     {
-        title: 'Doa Sebelum Belajar',
-        arabic: 'رَضِيْتُ بِاللهِ رَبًّا، وَبِالْإِسْلَامِ دِيْنًا، وَبِمُحَمَّدٍ نَبِيًّا وَرَسُوْلًا، رَبِّ زِدْنِيْ عِلْمًا وَارْزُقْنِيْ فَهْمًا',
-        latin: `"Rodhitu billahi robba, wa bil-islami dina, wa bi-muhammadin nabiyyaw wa rosula. Robbi zidni 'ilmaw warzuqni fahma."`,
-        meaning: 'Artinya: "Aku ridho Allah sebagai Tuhanku, Islam sebagai agamaku, dan Nabi Muhammad sebagai Nabi dan Rasulku. Ya Allah, tambahkanlah aku ilmu dan berilah aku karunia untuk memahaminya."'
+        title: "Doa Sebelum Belajar",
+        arabic: "رَضِيْتُ بِاللهِ رَبًّا، وَبِالْإِسْلَامِ دِيْنًا، وَبِمُحَمَّدٍ نَبِيًّا وَرَسُوْلًا، رَبِّ زِدْنِيْ عِلْمًا وَارْزُقْنِيْ فَهْمًا",
+        latin: "Rodhitu billahi robba, wa bil-islami dina, wa bi-muhammadin nabiyyaw wa rosula. Robbi zidni 'ilmaw warzuqni fahma.",
+        translation: "Aku ridho Allah sebagai Tuhanku, Islam sebagai agamaku, dan Nabi Muhammad sebagai Nabi dan Rasulku. Ya Allah, tambahkanlah aku ilmu dan berilah aku karunia untuk memahaminya."
     },
     {
-        title: 'Doa Pembuka Hati / Kelancaran Bicara',
-        arabic: 'رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي',
-        latin: `"Robbishroh lii shodrii, wa yassir lii amrii, wahlul 'uqdatam mil lisaanii, yafqohuu qowlii."`,
-        meaning: 'Artinya: "Ya Tuhanku, lapangkanlah dadaku, mudahkanlah urusanku, dan melepaskan kekakuan dari lidahku, supaya mereka mengerti perkataanku."'
+        title: "Doa Pembuka Hati / Kelancaran Bicara",
+        arabic: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي",
+        latin: "Robbishroh lii shodrii, wa yassir lii amrii, wahlul 'uqdatam mil lisaanii, yafqohuu qowlii.",
+        translation: "Ya Tuhanku, lapangkanlah dadaku, mudahkanlah urusanku, dan melepaskan kekakuan dari lidahku, supaya mereka mengerti perkataanku."
     },
     {
-        title: 'Doa Kebaikan Dunia & Akhirat',
-        arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
-        latin: `"Rabbana atina fid-dunya hasanah, wa fil-akhirati hasanah, wa qina 'adzaban-nar."`,
-        meaning: 'Artinya: "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat dan peliharalah kami dari siksa neraka."'
+        title: "Doa Kebaikan Dunia & Akhirat",
+        arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+        latin: "Rabbana atina fid-dunya hasanah, wa fil-akhirati hasanah, wa qina 'adzaban-nar.",
+        translation: "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat dan peliharalah kami dari siksa neraka."
     },
     {
-        title: 'Doa Untuk Kedua Orang Tua',
-        arabic: 'رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
-        latin: `"Rabbighfir lii wa liwaalidayya warhamhuma kamaa rabbayaanii shaghiiraa."`,
-        meaning: 'Artinya: "Ya Tuhanku, ampunilah aku dan kedua orang tuaku, serta kasihilah keduanya sebagaimana mereka telah merawatku sewaktu kecil."'
+        title: "Doa Untuk Kedua Orang Tua",
+        arabic: "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+        latin: "Rabbighfir lii wa liwaalidayya warhamhuma kamaa rabbayaanii shaghiiraa.",
+        translation: "Ya Tuhanku, ampunilah aku dan kedua orang tuaku, serta kasihilah keduanya sebagaimana mereka telah merawatku sewaktu kecil."
     }
 ];
 
+// INISIALISASI SAAT HALAMAN DIMUAT
 document.addEventListener('DOMContentLoaded', () => {
     initDynamicTimeGreeting();
     initLocationAndPrayerTimes();
+    
+    // Inisialisasi Amalan Harian (Doa & Quran)
+    initDoaDropdown();
+    initQuranDropdown();
+    
     setupEventListeners();
 });
 
-// 1. Fitur Waktu Dinamis (SELALU LIGHT MODE)
+// 1. Fitur Waktu Dinamis
 function initDynamicTimeGreeting() {
     const timeBadge = document.getElementById('time-badge');
     const hour = new Date().getHours();
     let greetingText = '';
     let iconClass = '';
 
-    // KUNCI TEMA LIGHT MODE SELAMANYA
     document.body.className = 'theme-day';
 
     if (hour >= 3 && hour < 10) {
@@ -192,7 +195,6 @@ function updateLocationDisplay(city, el1, el2) {
     if (el2) el2.innerText = `Menampilkan waktu sholat presisi untuk wilayah ${city} dan sekitarnya.`;
 }
 
-// Fetch API Jadwal Sholat
 async function fetchPrayerTimes(latitude, longitude) {
     try {
         const response = await fetch(`https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=20`);
@@ -211,18 +213,18 @@ async function fetchPrayerTimes(latitude, longitude) {
     }
 }
 
-// 3. Fitur Interaktif Modal Jurusan SMK (Dengan FOTO)
+// 3. Modal Pop-Up Jurusan
+// 3. Modal Pop-Up Jurusan
 function openJurusanModal(key) {
     const item = dataJurusan[key];
     if (!item) return;
 
-    // Memunculkan Foto jika file namanya ada di JS
     const modalImg = document.getElementById('m-image');
     if (item.foto) {
         modalImg.src = item.foto;
         modalImg.style.display = 'block';
     } else {
-        modalImg.style.display = 'none'; // Sembunyikan kalau gak ada foto
+        modalImg.style.display = 'none'; 
     }
 
     document.getElementById('m-icon').innerHTML = item.icon;
@@ -238,6 +240,26 @@ function openJurusanModal(key) {
         listContainer.appendChild(li);
     });
 
+    // --- TAMBAHAN: Tombol Aksi Menuju Pendaftaran Otomatis ---
+    const modalBody = document.querySelector('.modal-body');
+    
+    // Cek apakah wadah aksi tombol sudah ada atau belum di dalam modal
+    let actionContainer = modalBody.querySelector('.modal-actions');
+    if (!actionContainer) {
+        actionContainer = document.createElement('div');
+        actionContainer.className = 'modal-actions';
+        modalBody.appendChild(actionContainer);
+    }
+
+    // Isi tombol dengan link yang membawa parameter nama sekolah tujuan
+    actionContainer.innerHTML = `
+        <a href="pendaftaran.html?sekolah=${encodeURIComponent(item.title)}" class="btn-primary" style="text-decoration: none; justify-content: center;">
+            <i class="fa-solid fa-file-pen"></i> Daftar ${item.title} Ini
+        </a>
+        <button class="btn-secondary" onclick="closeJurusanModal()">Tutup</button>
+    `;
+    // ---------------------------------------------------------
+
     document.getElementById('jurusanModal').classList.add('open');
 }
 
@@ -245,8 +267,130 @@ function closeJurusanModal() {
     document.getElementById('jurusanModal').classList.remove('open');
 }
 
-// 4. Fitur Ganti Doa Harian
-let currentDuaIdx = 0;
+// 4. FITUR DROPDOWN DOA HARIAN (Dengan Fallback System)
+let doaList = []; 
+
+async function initDoaDropdown() {
+    const dropdown = document.getElementById('doaDropdown');
+    
+    try {
+        document.getElementById('dua-arabic').innerText = "Memuat...";
+        const response = await fetch('https://islamic-api-zhirrr.vercel.app/api/doaharian');
+        
+        if (!response.ok) throw new Error("API Sedang Down");
+        
+        const res = await response.json();
+        doaList = res.data; 
+        
+    } catch (error) {
+        console.warn('API Doa gagal dimuat. Beralih ke data cadangan lokal.');
+        doaList = dataDoaCadangan; 
+    }
+
+    dropdown.innerHTML = '<option value="">-- Pilih Doa Harian --</option>';
+    doaList.forEach((doa, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = doa.title;
+        dropdown.appendChild(option);
+    });
+
+    dropdown.addEventListener('change', function() {
+        if (this.value !== "") {
+            tampilkanDoaPilihan(this.value);
+        }
+    });
+
+    acakDoa();
+}
+
+function tampilkanDoaPilihan(index) {
+    if (doaList.length === 0) return;
+    
+    const doa = doaList[index];
+    document.getElementById('dua-arabic').innerText = doa.arabic || "Memuat...";
+    document.getElementById('dua-latin').innerText = doa.latin ? doa.latin : "";
+    document.getElementById('dua-meaning').innerHTML = `<strong>Artinya:</strong> "${doa.translation || ''}"`;
+}
+
+function acakDoa() {
+    if (doaList.length === 0) return;
+    
+    const randomIdx = Math.floor(Math.random() * doaList.length);
+    const dropdown = document.getElementById('doaDropdown');
+    
+    dropdown.value = randomIdx; 
+    tampilkanDoaPilihan(randomIdx);
+}
+
+// 5. FITUR DUAL DROPDOWN AL-QUR'AN (Surat & Ayat)
+let currentSurahData = null; 
+
+async function initQuranDropdown() {
+    try {
+        const dropdown = document.getElementById('quranDropdown');
+        const response = await fetch('https://equran.id/api/v2/surat');
+        const { data } = await response.json();
+        
+        dropdown.innerHTML = '<option value="">-- Pilih Surat --</option>';
+        
+        data.forEach(surat => {
+            const option = document.createElement('option');
+            option.value = surat.nomor;
+            option.textContent = `${surat.nomor}. ${surat.namaLatin} (${surat.jumlahAyat})`;
+            dropdown.appendChild(option);
+        });
+
+        dropdown.addEventListener('change', function() {
+            if (this.value) fetchAyatBySurat(this.value);
+        });
+
+        dropdown.value = 1;
+        fetchAyatBySurat(1);
+    } catch (error) {
+        console.error('Gagal memuat daftar surat', error);
+    }
+}
+
+async function fetchAyatBySurat(nomorSurat) {
+    try {
+        document.getElementById('quran-arabic').innerText = "Memuat ayat...";
+        
+        const ayatDropdown = document.getElementById('ayatDropdown');
+        ayatDropdown.innerHTML = '<option value="">...</option>';
+        
+        const response = await fetch(`https://equran.id/api/v2/surat/${nomorSurat}`);
+        const { data } = await response.json();
+        
+        currentSurahData = data; 
+        
+        ayatDropdown.innerHTML = '';
+        for (let i = 0; i < data.jumlahAyat; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `Ayat ${i + 1}`;
+            ayatDropdown.appendChild(option);
+        }
+
+        ayatDropdown.value = 0;
+        tampilkanAyatPilihan(0);
+        
+    } catch (error) {
+        console.error('Gagal memuat ayat', error);
+        document.getElementById('quran-arabic').innerText = "Gagal memuat ayat.";
+    }
+}
+
+function tampilkanAyatPilihan(index) {
+    if (!currentSurahData) return;
+
+    const ayat = currentSurahData.ayat[index];
+    document.getElementById('quran-arabic').innerText = ayat.teksArab;
+    document.getElementById('quran-latin').innerText = ayat.teksLatin;
+    document.getElementById('quran-meaning').innerHTML = `<strong>Ayat ke-${ayat.nomorAyat}:</strong> "${ayat.teksIndonesia}"`;
+}
+
+// 6. Event Listeners Keseluruhan
 function setupEventListeners() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
@@ -257,35 +401,28 @@ function setupEventListeners() {
     }
 
     const nextDuaBtn = document.getElementById('nextDuaBtn');
-    if (nextDuaBtn) {
-        nextDuaBtn.addEventListener('click', () => {
-            currentDuaIdx = (currentDuaIdx + 1) % listDoa.length;
-            const doa = listDoa[currentDuaIdx];
-            document.getElementById('dua-title').innerText = doa.title;
-            document.getElementById('dua-arabic').innerText = doa.arabic;
-            document.getElementById('dua-latin').innerText = doa.latin;
-            document.getElementById('dua-meaning').innerHTML = `<strong>Artinya:</strong> ${doa.meaning}`;
+    if (nextDuaBtn) nextDuaBtn.addEventListener('click', acakDoa);
+
+    const ayatDropdown = document.getElementById('ayatDropdown');
+    if (ayatDropdown) {
+        ayatDropdown.addEventListener('change', function() {
+            if (this.value !== "") tampilkanAyatPilihan(this.value);
         });
     }
 
-    // 5. Fitur Geser Galeri Animasi
     const slideLeftBtn = document.getElementById('slideLeft');
     const slideRightBtn = document.getElementById('slideRight');
     const galleryContainer = document.getElementById('galleryContainer');
 
     if (slideLeftBtn && slideRightBtn && galleryContainer) {
-        // Geser ke kiri sejauh 340px (lebar kartu + jarak)
-            slideLeftBtn.addEventListener('click', () => {
+        slideLeftBtn.addEventListener('click', () => {
             galleryContainer.scrollBy({ left: -340, behavior: 'smooth' });
         });
-
-        // Geser ke kanan sejauh 340px
-            slideRightBtn.addEventListener('click', () => {
+        slideRightBtn.addEventListener('click', () => {
              galleryContainer.scrollBy({ left: 340, behavior: 'smooth' });
         });
     }
     
-    // Tutup saat di-klik background hitam luar pop up
     window.addEventListener('click', (e) => {
         const modal = document.getElementById('jurusanModal');
         if (e.target === modal) {

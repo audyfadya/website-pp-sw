@@ -1,4 +1,3 @@
-/* CSS SYUBBANUL WATHON WEBSITE */
 :root {
     --primary: #0d9488;
     --primary-dark: #0f766e;
@@ -17,7 +16,6 @@
     --transition: all 0.3s ease;
 }
 
-/* Theme Day - Digunakan Default Sekarang */
 body.theme-day {
     background-color: #ffffff;
     color: var(--text-color);
@@ -37,7 +35,6 @@ body.theme-day {
     padding: 0 20px;
 }
 
-/* Top Bar */
 .top-bar {
     background-color: var(--dark);
     color: #cbd5e1;
@@ -73,7 +70,6 @@ body.theme-day {
     font-size: 0.78rem;
 }
 
-/* Navbar */
 .navbar {
     position: sticky;
     top: 0;
@@ -180,16 +176,12 @@ body.theme-day {
     cursor: pointer;
 }
 
-/* Hero Section */
 .hero {
     padding: 120px 0 90px;
-    
-    /* Ganti 'assets/nama-file-foto.jpg' dengan path & nama file fotomu */
     background: linear-gradient(rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.55)), 
                 url('assets/10-scaled-compresed.jpg'); 
-                
-    background-size: cover;       /* Agar gambar memenuhi seluruh area */
-    background-position: center;  /* Agar posisi gambar pas di tengah */
+    background-size: cover;       
+    background-position: center;  
     background-repeat: no-repeat;
     text-align: center;
 }
@@ -206,8 +198,8 @@ body.theme-day {
 }
 
 .hero-title {
-    color: #0f172a; /* Warna teks gelap */
-    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9), 0 1px 3px rgba(255, 255, 255, 1); /* Bayangan putih di belakang teks */
+    color: #0f172a; 
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9), 0 1px 3px rgba(255, 255, 255, 1); 
     font-size: 2.8rem;
     font-weight: 800;
     line-height: 1.25;
@@ -253,17 +245,16 @@ body.theme-day {
     text-decoration: none;
     font-weight: 800;
     font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan halus */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
     transition: var(--transition);
 }
 
 .btn-outline-lg:hover {
     background-color: var(--primary);
-    color: #ffffff;                 /* Berubah jadi hijau penuh saat kursor di atasnya */
+    color: #ffffff;                 
     transform: translateY(-2px);
 }
 
-/* Sections */
 .section {
     padding: 70px 0;
 }
@@ -296,7 +287,6 @@ body.theme-day {
     margin-top: 10px;
 }
 
-/* Jadwal Sholat Cards */
 .prayer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -332,15 +322,20 @@ body.theme-day {
     margin-top: 8px;
 }
 
-/* Doa Harian */
+.amalan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
 .dua-box {
     background-color: var(--card-bg);
     border-radius: var(--radius);
     padding: 35px;
     box-shadow: var(--shadow);
     border: 1px solid var(--gray-200);
-    max-width: 850px;
-    margin: 0 auto;
 }
 
 .dua-header {
@@ -348,15 +343,6 @@ body.theme-day {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-}
-
-.dua-category {
-    background-color: rgba(217, 119, 6, 0.15);
-    color: var(--secondary);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 0.9rem;
 }
 
 .btn-icon {
@@ -367,6 +353,35 @@ body.theme-day {
     cursor: pointer;
     color: var(--text-color);
     font-weight: 600;
+}
+
+.btn-icon:hover {
+    background-color: var(--gray-100);
+}
+
+.dua-dropdown {
+    width: 100%;
+    max-width: 250px;
+    padding: 8px 12px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition);
+}
+
+.dua-dropdown:focus {
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+}
+
+.quran-box .dua-dropdown {
+    background-color: rgba(13, 148, 136, 0.15); 
+    color: var(--primary-dark);
 }
 
 .dua-arabic {
@@ -389,7 +404,6 @@ body.theme-day {
     line-height: 1.6;
 }
 
-/* Lembaga Grid */
 .lembaga-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -446,7 +460,6 @@ body.theme-day {
     font-weight: 700;
 }
 
-/* Jurusan SMK Interaktif */
 .jurusan-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -509,7 +522,6 @@ body.theme-day {
     color: var(--primary);
 }
 
-/* Modal Pop-up */
 .modal {
     display: none;
     position: fixed;
@@ -585,7 +597,20 @@ body.theme-day {
     margin-top: 25px;
 }
 
-/* Footer */
+#m-desc {
+    max-width: 90%;          
+    margin: 0 auto 15px auto; 
+    line-height: 1.7;        
+    text-align: left;      
+}
+
+#m-title, #m-subtitle {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
 .footer {
     background-color: var(--dark);
     color: #94a3b8;
@@ -624,7 +649,6 @@ body.theme-day {
     font-size: 0.85rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
@@ -642,24 +666,6 @@ body.theme-day {
     .hero-title { font-size: 2rem; }
 }
 
-/* Mengatur Jarak Teks Deskripsi Pop-up Modal */
-#m-desc {
-    max-width: 90%;          /* Membatasi lebar teks agar tidak mentok ke pinggir */
-    margin: 0 auto 15px auto; /* Memusatkan teks dan memberi jarak bawah */
-    line-height: 1.7;        /* Jarak antar baris agar mudah dibaca */
-    text-align: left;      /* Opsi: agar teks rata tengah (bisa diganti left jika ingin rata kiri) */
-}
-
-#m-title, #m-subtitle {
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-}
-
-/* ============================
-   Galeri Geser (Side Scrolling)
-   ============================ */
 .gallery-wrapper {
     position: relative;
     display: flex;
@@ -673,12 +679,10 @@ body.theme-day {
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     padding: 20px 0;
-    /* Sembunyikan scrollbar bawaan browser */
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-/* Sembunyikan scrollbar di Chrome/Safari */
 .gallery-container::-webkit-scrollbar {
     display: none; 
 }
@@ -695,7 +699,6 @@ body.theme-day {
     cursor: pointer;
 }
 
-/* Animasi gambar saat di-hover (Zoom in pelan) */
 .gallery-item img {
     width: 100%;
     height: 100%;
@@ -712,7 +715,6 @@ body.theme-day {
     transform: scale(1.1); 
 }
 
-/* Teks Judul Muncul dari Bawah (Overlay) */
 .gallery-overlay {
     position: absolute;
     bottom: 0;
@@ -723,15 +725,14 @@ body.theme-day {
     padding: 30px 20px 20px;
     font-weight: 700;
     font-size: 1.1rem;
-    transform: translateY(100%); /* Awalnya bersembunyi di bawah */
+    transform: translateY(100%);
     transition: transform 0.4s ease;
 }
 
 .gallery-item:hover .gallery-overlay {
-    transform: translateY(0); /* Muncul saat disorot */
+    transform: translateY(0); 
 }
 
-/* Tombol Geser Kiri-Kanan */
 .gallery-btn {
     background-color: var(--card-bg);
     border: 1px solid var(--gray-200);
@@ -758,7 +759,6 @@ body.theme-day {
 .gallery-btn.left { left: -25px; }
 .gallery-btn.right { right: -25px; }
 
-/* Sembunyikan tombol geser di layar HP, karena di HP lebih enak di-swipe/geser pakai jari */
 @media (max-width: 768px) {
     .gallery-btn { display: none; }
 }
