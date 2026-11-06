@@ -804,3 +804,70 @@ body.theme-day {
         height: 35px;
     }
 }
+
+/* ==========================================
+   BERITA & PENGUMUMAN
+   ========================================== */
+.berita-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.berita-card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-200);
+    transition: var(--transition);
+}
+
+.berita-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.berita-badge {
+    display: inline-block;
+    background-color: rgba(234, 88, 12, 0.15); /* Orange pudar */
+    color: #ea580c;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.berita-badge.badge-kegiatan {
+    background-color: rgba(13, 148, 136, 0.15); /* Hijau pudar */
+    color: var(--primary-dark);
+}
+
+.berita-badge.badge-akademik {
+    background-color: rgba(37, 99, 235, 0.15); /* Biru pudar */
+    color: #2563eb;
+}
+
+.berita-card h3 {
+    font-size: 1.2rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.berita-tanggal {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.berita-desc {
+    color: var(--gray-800);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
