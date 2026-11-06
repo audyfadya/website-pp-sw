@@ -54,6 +54,14 @@
                         </select>
                     </div>
 
+                    <!-- Kotak Informasi Rincian Biaya Otomatis / Panduan -->
+                    <div id="infoBiayaSekolah" style="background: var(--primary-light); padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--primary); display: none;">
+                        <h4 style="color: var(--primary-dark); margin-bottom: 5px; font-size: 0.95rem;">
+                            <i class="fa-solid fa-circle-info"></i> Estimasi Biaya Daftar Ulang Unit Terpilih:
+                        </h4>
+                        <p id="teksEstimasiBiaya" style="font-size: 0.9rem; color: var(--dark); font-weight: 600; margin: 0;"></p>
+                    </div>
+
                     <!-- Pilihan Jurusan SMK (Hanya Muncul Jika Pilih SMK) -->
                     <div id="wrapperJurusan" style="margin-bottom: 20px; display: none; background: var(--primary-light); padding: 15px; border-radius: 8px; border: 1px solid var(--primary);">
                         <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark);">
@@ -192,6 +200,42 @@
 
             alert(pesan);
             window.location.href = 'index.html';
+        }
+
+        // Data estimasi biaya per sekolah untuk ditampilkan di form
+        const estimasiBiayaMap = {
+            "SMP Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
+            "MTs Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
+            "SMA Syubbanul Wathon": "Total Estimasi Awal: Rp 7.300.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
+            "SMK Syubbanul Wathon": "Total Estimasi Awal: Rp 7.800.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
+            "MA Syubbanul Wathon": "Total Estimasi Awal: Rp 7.300.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)"
+        };
+
+        // Modifikasi fungsi cekPilihanSekolah yang sudah ada
+        function cekPilihanSekolah() {
+            const pilihan = document.getElementById('pilihanSekolah').value;
+            const wrapperJurusan = document.getElementById('wrapperJurusan');
+            const selectJurusan = document.getElementById('pilihanJurusan');
+            const infoBiayaBox = document.getElementById('infoBiayaSekolah');
+            const teksBiaya = document.getElementById('teksEstimasiBiaya');
+
+            // Logika Jurusan SMK
+            if (pilihan === "SMK Syubbanul Wathon") {
+                wrapperJurusan.style.display = "block";
+                selectJurusan.setAttribute("required", "true");
+            } else {
+                wrapperJurusan.style.display = "none";
+                selectJurusan.removeAttribute("required");
+                selectJurusan.value = "";
+            }
+
+            // Logika Tampil Informasi Biaya
+            if (pilihan && estimasiBiayaMap[pilihan]) {
+                infoBiayaBox.style.display = "block";
+                teksBiaya.textContent = estimasiBiayaMap[pilihan];
+            } else {
+                infoBiayaBox.style.display = "none";
+            }
         }
     </script>
 </body>

@@ -948,3 +948,33 @@ body.theme-day {
     font-size: 0.92rem;
     line-height: 1.6;
 }
+
+/* ==========================================
+   STYLING TABEL BIAYA halaman pendaftaran
+   ========================================== */
+.tabel-biaya {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-200);
+}
+
+.tabel-biaya th, .tabel-biaya td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 0.92rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.tabel-biaya th {
+    background-color: var(--primary);
+    color: white;
+    font-weight: 700;
+}
+
+.tabel-biaya tbody tr:hover {
+    background-color: var(--gray-100);
+}
