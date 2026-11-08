@@ -464,6 +464,7 @@ body.theme-day {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 25px;
+    align-items: stretch; /* Memaksa semua kartu memiliki tinggi yang sama */
 }
 
 .jurusan-card {
@@ -474,6 +475,12 @@ body.theme-day {
     box-shadow: var(--shadow);
     cursor: pointer;
     transition: var(--transition);
+
+    /* Tambahkan ini agar footer kartu tetap rata di bawah */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .jurusan-card:hover {
