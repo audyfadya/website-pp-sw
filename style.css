@@ -1073,3 +1073,72 @@ body.theme-day {
         min-height: 280px;
     }
 }
+
+/* ==========================================
+   STYLING SEJARAH YAYASAN & KETUA YAYASAN
+   ========================================== */
+.sejarah-card {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-200);
+    border-left: 5px solid var(--primary);
+}
+
+.sejarah-teks {
+    font-size: 1rem;
+    color: var(--gray-800);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.sejarah-divider {
+    border: 0;
+    border-top: 1px dashed var(--gray-200);
+    margin: 25px 0;
+}
+
+.ketua-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--primary-light);
+    padding: 16px 20px;
+    border-radius: 10px;
+    max-width: fit-content;
+}
+
+.ketua-icon {
+    width: 45px;
+    height: 45px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.ketua-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gray-600);
+    text-transform: uppercase;
+}
+
+.ketua-nama {
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+    .sejarah-card {
+        padding: 25px 20px;
+    }
+    .ketua-box {
+        max-width: 100%;
+    }
+}
