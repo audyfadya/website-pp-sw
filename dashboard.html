@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Syubbanul Wathon</title>
+    <!-- Gunakan FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styledashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- SIDEBAR NAVIGASI -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-shield-halal"></i>
+            <span>Admin Portal</span>
+        </div>
+        <ul class="sidebar-menu">
+            <!-- Tambahkan data-target sesuai ID modul -->
+            <li class="active"><a href="#" data-target="modul-ringkasan"><i class="fa-solid fa-chart-pie"></i> Ringkasan</a></li>
+            <li><a href="#" data-target="modul-psb"><i class="fa-solid fa-users"></i> Data PSB 2026</a></li>
+            <li><a href="#" data-target="modul-berita"><i class="fa-solid fa-newspaper"></i> Kelola Berita</a></li>
+            <li><a href="#" data-target="modul-biaya"><i class="fa-solid fa-money-check-dollar"></i> Setting Biaya</a></li>
+            <li><a href="#" data-target="modul-pesan"><i class="fa-solid fa-envelope"></i> Pesan Masuk</a></li>
+            <li><a href="#" data-target="modul-pengaturan"><i class="fa-solid fa-gear"></i> Pengaturan</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="index.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar (Logout)</a>
+        </div>
+    </aside>
+
+    <!-- AREA KONTEN UTAMA -->
+    <main class="main-content">
+        <!-- HEADER ATAS TETAP SAMA -->
+        <header class="top-header">
+            <div class="header-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Cari nama pendaftar atau NISN...">
+            </div>
+            <div class="header-profile">
+                <span class="notification"><i class="fa-solid fa-bell"></i><span class="badge">3</span></span>
+                <div class="admin-info">
+                    <span class="admin-name">Super Admin</span>
+                    <span class="admin-role">Sekretariat Pusat</span>
+                </div>
+                <div class="admin-avatar">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- AREA MODUL DINAMIS -->
+        <div class="dashboard-body">
+            
+            <!-- MODUL 1: RINGKASAN (DEFAULT TAMPIL) -->
+            <div id="modul-ringkasan" class="modul-content active">
+                <h2 class="page-title">Ringkasan Sistem</h2>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue"><i class="fa-solid fa-user-graduate"></i></div>
+                        <div class="stat-details">
+                            <h3>Total Pendaftar</h3>
+                            <p class="stat-number">1,245</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-orange"><i class="fa-solid fa-file-circle-exclamation"></i></div>
+                        <div class="stat-details">
+                            <h3>Menunggu Verifikasi</h3>
+                            <p class="stat-number">42</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green"><i class="fa-solid fa-check-double"></i></div>
+                        <div class="stat-details">
+                            <h3>Lolos Seleksi</h3>
+                            <p class="stat-number">850</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple"><i class="fa-solid fa-bullhorn"></i></div>
+                        <div class="stat-details">
+                            <h3>Berita Aktif</h3>
+                            <p class="stat-number">24</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODUL 2: DATA PSB (BERISI TABEL PENDAFTAR) -->
+            <div id="modul-psb" class="modul-content">
+                <h2 class="page-title">Manajemen Data Pendaftar (PSB)</h2>
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>Pendaftar Terbaru (PSB)</h3>
+                        <button class="btn-export"><i class="fa-solid fa-file-excel"></i> Export Excel</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>No. Daftar</th>
+                                    <th>Nama Calon Santri</th>
+                                    <th>Unit Tujuan</th>
+                                    <th>Tanggal Daftar</th>
+                                    <th>Status Berkas</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#PSB-26001</td>
+                                    <td><strong>Ahmad Fauzi</strong></td>
+                                    <td>SMK (PPLG)</td>
+                                    <td>12 Okt 2026</td>
+                                    <td><span class="status-badge status-pending">Menunggu</span></td>
+                                    <td><button class="btn-action">Verifikasi</button></td>
+                                </tr>
+                                <tr>
+                                    <td>#PSB-26002</td>
+                                    <td><strong>Siti Aminah</strong></td>
+                                    <td>SMA (MIPA)</td>
+                                    <td>12 Okt 2026</td>
+                                    <td><span class="status-badge status-success">Lengkap</span></td>
+                                    <td><button class="btn-action btn-view">Lihat</button></td>
+                                </tr>
+                                <tr>
+                                    <td>#PSB-26003</td>
+                                    <td><strong>Budi Santoso</strong></td>
+                                    <td>MTs</td>
+                                    <td>11 Okt 2026</td>
+                                    <td><span class="status-badge status-danger">Ditolak</span></td>
+                                    <td><button class="btn-action btn-view">Lihat</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODUL 3: KELOLA BERITA (KOSONGAN SEMENTARA) -->
+            <div id="modul-berita" class="modul-content">
+                <h2 class="page-title">Kelola Berita & Pengumuman</h2>
+                <div class="data-section">
+                    <p>Halaman form input berita akan diletakkan di sini.</p>
+                </div>
+            </div>
+
+            <!-- MODUL 4: SETTING BIAYA -->
+            <div id="modul-biaya" class="modul-content">
+                <h2 class="page-title">Pengaturan Biaya Pendidikan</h2>
+                <div class="data-section">
+                    <p>Tabel atau formulir perubahan rincian biaya pendaftaran akan tampil di sini.</p>
+                </div>
+            </div>
+
+            <!-- MODUL 5: PESAN MASUK -->
+            <div id="modul-pesan" class="modul-content">
+                <h2 class="page-title">Kotak Pesan Masuk (Inbox)</h2>
+                <div class="data-section">
+                    <p>Daftar pesan pertanyaan dari form kontak website utama akan tampil di sini.</p>
+                </div>
+            </div>
+
+            <!-- MODUL 6: PENGATURAN -->
+            <div id="modul-pengaturan" class="modul-content">
+                <h2 class="page-title">Pengaturan Sistem</h2>
+                <div class="data-section">
+                    <p>Form ganti password admin, upload logo, dll.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <!-- HUBUNGKAN FILE JAVASCRIPT DI SINI -->
+    <script src="javascriptdashboard.js"></script>
+</body>
+</html>

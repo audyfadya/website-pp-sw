@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pondok Pesantren Syubbanul Wathon</title>
+    <title>Pondok Pesantren Syubbanul Wathon - Pendidikan Berkarakter & Teknologi</title>
+    <meta name="description" content="Portal resmi Pondok Pesantren Syubbanul Wathon Magelang. Menyelenggarakan pendidikan Islam terpadu jenjang SMP, MTs, SMA, SMK Vokasi, dan MA berasrama modern.">
+    <meta name="keywords" content="Syubbanul Wathon, Pesantren Magelang, SMK Syubbanul Wathon, SMA Syubbanul Wathon, Tegalrejo, Santri, Pendaftaran Santri Baru">
+    <meta property="og:title" content="Pondok Pesantren Syubbanul Wathon">
+    <meta property="og:description" content="Mencetak Generasi Rabbani, Unggul, dan Berdaya Saing Global. Pendidikan berbasis akhlakul karimah dan teknologi modern.">
+    <meta property="og:image" content="assets/logo sw.png">
+    <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="assets/logo sw.png">
     <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,7 +44,7 @@
                     <span class="brand-sub">Pondok Pesantren & Lembaga Pendidikan</span>
                 </div>
             </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            <button class="nav-toggle" id="navToggle" aria-label="Buka Menu Navigasi" aria-expanded="false" aria-controls="navMenu">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <nav class="nav-menu" id="navMenu">
@@ -181,7 +187,7 @@
                 <p class="section-desc">Pilihan jenjang formal terakreditasi yang memadukan kurikulum nasional dan nilai pesantren.</p>
             </div>
             <div class="jurusan-grid">
-                <div class="jurusan-card" onclick="openJurusanModal('SMK')">
+                <div class="jurusan-card" onclick="openJurusanModal('SMK')" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Buka detail profil SMK Syubbanul Wathon">
                     <div class="jurusan-card-header">
                         <img src="assets/logosekolah2/SMK-T.png" alt="Logo SMK" style="height: 35px; width: auto; object-fit: contain;">
                         <span class="jurusan-tag">KEJURUAN VOKASI</span>
@@ -194,7 +200,7 @@
                     </div>
                 </div>
 
-                <div class="jurusan-card" onclick="openJurusanModal('SMA')">
+                <div class="jurusan-card" onclick="openJurusanModal('SMA')" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Buka detail profil SMA Syubbanul Wathon">
                     <div class="jurusan-card-header">
                         <img src="assets/logosekolah2/SMA.png" alt="Logo SMA" style="height: 35px; width: auto; object-fit: contain;">
                         <span class="jurusan-tag">TINGKAT MENENGAH ATAS</span>
@@ -207,7 +213,7 @@
                     </div>
                 </div>
 
-                <div class="jurusan-card" onclick="openJurusanModal('SMP')">
+                <div class="jurusan-card" onclick="openJurusanModal('SMP')" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Buka detail profil SMP Syubbanul Wathon">
                     <div class="jurusan-card-header">
                         <img src="assets/logosekolah2/SMP-T.png" alt="Logo SMP" style="height: 35px; width: auto; object-fit: contain;">
                         <span class="jurusan-tag">TINGKAT MENENGAH PERTAMA</span>
@@ -220,7 +226,7 @@
                     </div>
                 </div>
 
-                <div class="jurusan-card" onclick="openJurusanModal('MA')">
+                <div class="jurusan-card" onclick="openJurusanModal('MA')" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Buka detail profil MA Syubbanul Wathon">
                     <div class="jurusan-card-header">
                         <img src="assets/logosekolah2/EM-MA.png" alt="Logo MA" style="height: 35px; width: auto; object-fit: contain;">
                         <span class="jurusan-tag">TINGKAT MENENGAH ATAS</span>
@@ -233,7 +239,7 @@
                     </div>
                 </div>
 
-                <div class="jurusan-card" onclick="openJurusanModal('MTs')">
+                <div class="jurusan-card" onclick="openJurusanModal('MTs')" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Buka detail profil MTs Syubbanul Wathon">
                     <div class="jurusan-card-header">
                         <img src="assets/logosekolah2/logo-mts-newest.png" alt="Logo MTs" style="height: 35px; width: auto; object-fit: contain;">
                         <span class="jurusan-tag">TINGKAT MENENGAH PERTAMA</span>
@@ -393,9 +399,9 @@
         </div>
     </section>
 
-    <div class="modal" id="jurusanModal">
+    <div class="modal" id="jurusanModal" role="dialog" aria-modal="true" aria-labelledby="m-title" aria-hidden="true">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeJurusanModal()">&times;</button>
+            <button class="modal-close" onclick="closeJurusanModal()" aria-label="Tutup Jendela Detail">&times;</button>
             <div class="modal-body">
                 <img id="m-image" src="" alt="Foto Jurusan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; display: none;">
                 <div class="modal-icon" id="m-icon"><i class="fa-solid fa-code"></i></div>
@@ -410,8 +416,10 @@
                 <ul id="m-prospects" class="prospects-list"></ul>
 
                 <div class="modal-actions">
-                    <a href="#kontak" class="btn-primary" onclick="closeJurusanModal()">Daftar Jurusan Ini</a>
-                    <button class="btn-secondary" onclick="closeJurusanModal()">Tutup</button>
+                    <a href="pendaftaran.html" id="modalDaftarBtn" class="btn-primary" style="text-decoration: none; justify-content: center;">
+                        <i class="fa-solid fa-file-pen"></i> <span id="modalDaftarText">Daftar Jurusan Ini</span>
+                    </a>
+                    <button type="button" class="btn-secondary" onclick="closeJurusanModal()">Tutup</button>
                 </div>
             </div>
         </div>
@@ -531,7 +539,8 @@
                         style="border:0;" 
                         allowfullscreen="" 
                         loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Peta Lokasi Kampus Pondok Pesantren Syubbanul Wathon">
                     </iframe>
                 </div>
 

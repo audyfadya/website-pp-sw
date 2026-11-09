@@ -214,7 +214,6 @@ async function fetchPrayerTimes(latitude, longitude) {
 }
 
 // 3. Modal Pop-Up Jurusan
-// 3. Modal Pop-Up Jurusan
 function openJurusanModal(key) {
     const item = dataJurusan[key];
     if (!item) return;
@@ -222,6 +221,7 @@ function openJurusanModal(key) {
     const modalImg = document.getElementById('m-image');
     if (item.foto) {
         modalImg.src = item.foto;
+        modalImg.alt = `Foto Kegiatan ${item.title}`;
         modalImg.style.display = 'block';
     } else {
         modalImg.style.display = 'none'; 
@@ -240,31 +240,29 @@ function openJurusanModal(key) {
         listContainer.appendChild(li);
     });
 
-    // --- TAMBAHAN: Tombol Aksi Menuju Pendaftaran Otomatis ---
-    const modalBody = document.querySelector('.modal-body');
-    
-    // Cek apakah wadah aksi tombol sudah ada atau belum di dalam modal
-    let actionContainer = modalBody.querySelector('.modal-actions');
-    if (!actionContainer) {
-        actionContainer = document.createElement('div');
-        actionContainer.className = 'modal-actions';
-        modalBody.appendChild(actionContainer);
+    // Update link dan teks tombol pendaftaran secara bersih tanpa merusak struktur DOM
+    const modalDaftarBtn = document.getElementById('modalDaftarBtn');
+    const modalDaftarText = document.getElementById('modalDaftarText');
+    if (modalDaftarBtn) {
+        modalDaftarBtn.href = `pendaftaran.html?sekolah=${encodeURIComponent(item.title)}`;
+    }
+    if (modalDaftarText) {
+        modalDaftarText.textContent = `Daftar ${item.title} Ini`;
     }
 
-    // Isi tombol dengan link yang membawa parameter nama sekolah tujuan
-    actionContainer.innerHTML = `
-        <a href="pendaftaran.html?sekolah=${encodeURIComponent(item.title)}" class="btn-primary" style="text-decoration: none; justify-content: center;">
-            <i class="fa-solid fa-file-pen"></i> Daftar ${item.title} Ini
-        </a>
-        <button class="btn-secondary" onclick="closeJurusanModal()">Tutup</button>
-    `;
-    // ---------------------------------------------------------
-
-    document.getElementById('jurusanModal').classList.add('open');
+    const modal = document.getElementById('jurusanModal');
+    if (modal) {
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+    }
 }
 
 function closeJurusanModal() {
-    document.getElementById('jurusanModal').classList.remove('open');
+    const modal = document.getElementById('jurusanModal');
+    if (modal) {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+    }
 }
 
 // 4. FITUR DROPDOWN DOA HARIAN (Dengan Fallback System)
@@ -390,15 +388,40 @@ function tampilkanAyatPilihan(index) {
     document.getElementById('quran-meaning').innerHTML = `<strong>Ayat ke-${ayat.nomorAyat}:</strong> "${ayat.teksIndonesia}"`;
 }
 
-// 6. Event Listeners Keseluruhan
+// 6. Event Listeners Keseluruhan & Aksesibilitas
 function setupEventListeners() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
-    if (navToggle) {
+    
+    // Toggle menu mobile dengan atribut aksesibilitas
+    if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('show');
+            const isOpen = navMenu.classList.toggle('show');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Menutup menu mobile otomatis saat salah satu link diklik
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
         });
     }
+
+    // Dukungan navigasi keyboard (Enter / Space) untuk kartu jurusan
+    const jurusanCards = document.querySelectorAll('.jurusan-card');
+    jurusanCards.forEach(card => {
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.click();
+            }
+        });
+    });
 
     const nextDuaBtn = document.getElementById('nextDuaBtn');
     if (nextDuaBtn) nextDuaBtn.addEventListener('click', acakDoa);
@@ -423,9 +446,17 @@ function setupEventListeners() {
         });
     }
     
+    // Tutup modal jika klik di area latar belakang (overlay)
     window.addEventListener('click', (e) => {
         const modal = document.getElementById('jurusanModal');
         if (e.target === modal) {
+            closeJurusanModal();
+        }
+    });
+
+    // Tutup modal saat tombol Escape (ESC) ditekan
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
             closeJurusanModal();
         }
     });

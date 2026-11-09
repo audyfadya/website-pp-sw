@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulir Pendaftaran Santri Baru - Syubbanul Wathon</title>
+    <meta name="description" content="Formulir resmi Pendaftaran Santri Baru (PSB) Pondok Pesantren Syubbanul Wathon untuk jenjang SMP, MTs, SMA, SMK, dan MA.">
     <link rel="icon" type="image/png" href="assets/logo sw.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,23 +29,23 @@
     </header>
 
     <!-- Form Pendaftaran Section -->
-    <section class="section bg-light" style="padding: 50px 0;">
-        <div class="container" style="max-width: 800px;">
+    <section class="section bg-light form-section">
+        <div class="container form-wrapper">
             <div class="section-header" style="margin-bottom: 30px;">
-                <span class="section-subtitle"></span>
+                <span class="section-subtitle"><i class="fa-solid fa-file-signature"></i> Penerimaan Santri Baru</span>
                 <h2 class="section-title">Formulir Pendaftaran Santri Baru</h2>
-                <p class="section-desc">Silakan lengkapi data diri dan unggah berkas persyaratan dengan benar.</p>
+                <p class="section-desc">Silakan lengkapi data diri dan unggah berkas persyaratan calon santri dengan benar.</p>
             </div>
 
-            <div class="dua-box" style="background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow);">
+            <div class="form-card">
                 <form id="formPendaftaran" onsubmit="handleRegister(event)">
                     
                     <!-- Pilihan Jenjang Sekolah -->
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">
-                            <i class="fa-solid fa-school" style="color: var(--primary);"></i> Pilih Jenjang / Sekolah Tujuan *
+                    <div class="form-group">
+                        <label class="form-label" for="pilihanSekolah">
+                            <i class="fa-solid fa-school" style="color: var(--primary);"></i> Pilih Jenjang / Sekolah Tujuan <span class="required">*</span>
                         </label>
-                        <select id="pilihanSekolah" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px;" required onchange="cekPilihanSekolah()">
+                        <select id="pilihanSekolah" class="form-select" required onchange="cekPilihanSekolah()">
                             <option value="">-- Pilih Unit Pendidikan --</option>
                             <option value="SMK Syubbanul Wathon">SMK Syubbanul Wathon</option>
                             <option value="SMA Syubbanul Wathon">SMA Syubbanul Wathon</option>
@@ -54,20 +55,18 @@
                         </select>
                     </div>
 
-                    <!-- Kotak Informasi Rincian Biaya Otomatis / Panduan -->
-                    <div id="infoBiayaSekolah" style="background: var(--primary-light); padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--primary); display: none;">
-                        <h4 style="color: var(--primary-dark); margin-bottom: 5px; font-size: 0.95rem;">
-                            <i class="fa-solid fa-circle-info"></i> Estimasi Biaya Daftar Ulang Unit Terpilih:
-                        </h4>
-                        <p id="teksEstimasiBiaya" style="font-size: 0.9rem; color: var(--dark); font-weight: 600; margin: 0;"></p>
+                    <!-- Kotak Informasi Rincian Biaya Otomatis -->
+                    <div id="infoBiayaSekolah" class="form-info-box">
+                        <h4><i class="fa-solid fa-circle-info"></i> Estimasi Biaya Daftar Ulang Unit Terpilih:</h4>
+                        <p id="teksEstimasiBiaya"></p>
                     </div>
 
-                    <!-- Pilihan Jurusan SMK (Hanya Muncul Jika Pilih SMK) -->
-                    <div id="wrapperJurusan" style="margin-bottom: 20px; display: none; background: var(--primary-light); padding: 15px; border-radius: 8px; border: 1px solid var(--primary);">
-                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark);">
-                            <i class="fa-solid fa-laptop-code"></i> Pilih Program Keahlian (Jurusan SMK) *
+                    <!-- Pilihan Jurusan SMK (Muncul Hanya Jika Pilih SMK) -->
+                    <div id="wrapperJurusan" class="form-jurusan-box">
+                        <label class="form-label" for="pilihanJurusan" style="color: var(--primary-dark);">
+                            <i class="fa-solid fa-laptop-code"></i> Pilih Program Keahlian (Jurusan SMK) <span class="required">*</span>
                         </label>
-                        <select id="pilihanJurusan" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;">
+                        <select id="pilihanJurusan" class="form-select">
                             <option value="">-- Pilih Jurusan SMK --</option>
                             <option value="PPLG (Pengembangan Perangkat Lunak & Gim)">PPLG - Pengembangan Perangkat Lunak & Gim</option>
                             <option value="TJKT (Teknik Jaringan Komputer & Telekomunikasi)">TJKT - Teknik Jaringan Komputer & Telekomunikasi</option>
@@ -76,27 +75,27 @@
                         </select>
                     </div>
 
-                    <!-- NISN & NIK (Opsional) -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <!-- NISN & NIK -->
+                    <div class="form-grid-2 form-group">
                         <div>
-                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">NISN *</label>
-                            <input type="text" id="nisn" placeholder="Contoh: 0081234567" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;" required>
+                            <label class="form-label" for="nisn">NISN <span class="required">*</span></label>
+                            <input type="text" id="nisn" placeholder="Contoh: 0081234567" class="form-control" required>
                         </div>
                         <div>
-                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">NIK / No. KK (Opsional)</label>
-                            <input type="text" id="nik" placeholder="Kosongkan jika belum ada" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;">
+                            <label class="form-label" for="nik">NIK / No. KK <span class="form-help">(Opsional)</span></label>
+                            <input type="text" id="nik" placeholder="Kosongkan jika belum ada" class="form-control">
                         </div>
                     </div>
 
                     <!-- Nama Lengkap & Jenis Kelamin -->
-                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div class="form-grid-2-1 form-group">
                         <div>
-                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">Nama Lengkap Calon Santri *</label>
-                            <input type="text" id="namaLengkap" placeholder="Masukkan nama lengkap" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;" required>
+                            <label class="form-label" for="namaLengkap">Nama Lengkap Calon Santri <span class="required">*</span></label>
+                            <input type="text" id="namaLengkap" placeholder="Masukkan nama lengkap sesuai ijazah/akta" class="form-control" required>
                         </div>
                         <div>
-                            <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">Jenis Kelamin *</label>
-                            <select id="gender" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px;" required>
+                            <label class="form-label" for="gender">Jenis Kelamin <span class="required">*</span></label>
+                            <select id="gender" class="form-select" required>
                                 <option value="">Pilih</option>
                                 <option value="Laki-laki">Laki-laki</option>
                                 <option value="Perempuan">Perempuan</option>
@@ -104,45 +103,47 @@
                         </div>
                     </div>
 
-                    <!-- No HP / WhatsApp -->
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">
-                            <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> No. WhatsApp Aktif (Santri / Orang Tua) *
+                    <!-- No WhatsApp -->
+                    <div class="form-group">
+                        <label class="form-label" for="noHp">
+                            <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> No. WhatsApp Aktif (Santri / Orang Tua) <span class="required">*</span>
                         </label>
-                        <input type="tel" id="noHp" placeholder="Contoh: 081234567890" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white;" required>
+                        <input type="tel" id="noHp" placeholder="Contoh: 081234567890" class="form-control" required pattern="[0-9+ -]{9,16}">
                     </div>
 
                     <!-- Alamat Asal -->
-                    <div style="margin-bottom: 25px;">
-                        <label style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">Alamat Asal (Desa, Kecamatan, Kabupaten/Kota) *</label>
-                        <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap domisili saat ini" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 12px; background: white; height: auto;" required></textarea>
+                    <div class="form-group">
+                        <label class="form-label" for="alamat">Alamat Asal (Desa, Kecamatan, Kabupaten/Kota) <span class="required">*</span></label>
+                        <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap domisili saat ini" class="form-textarea" required></textarea>
                     </div>
 
                     <!-- Kotak Unggah Dokumen / Berkas -->
-                    <div style="background: var(--gray-100); padding: 20px; border-radius: var(--radius); margin-bottom: 25px; border: 1px dashed var(--primary);">
-                        <h4 style="margin-bottom: 15px; color: var(--primary-dark); font-size: 1rem;">
+                    <div class="form-upload-box">
+                        <div class="form-upload-header">
                             <i class="fa-solid fa-cloud-arrow-up"></i> Unggah Dokumen Persyaratan
-                        </h4>
+                        </div>
                         
                         <!-- Transkrip Nilai -->
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: var(--dark);">
-                                Transkrip Nilai / Rapor Semester Terakhir * <span style="font-size: 0.75rem; color: var(--gray-600);">(PDF/JPG/PNG)</span>
+                        <div class="form-upload-item">
+                            <label class="form-label" for="berkasTranskrip">
+                                Transkrip Nilai / Rapor Semester Terakhir <span class="required">*</span>
+                                <span class="form-help">(Maks. 5 MB &bull; PDF, JPG, PNG)</span>
                             </label>
-                            <input type="file" id="berkasTranskrip" accept=".pdf,.jpg,.jpeg,.png" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 10px; background: white;" required>
+                            <input type="file" id="berkasTranskrip" accept=".pdf,.jpg,.jpeg,.png" class="form-control" required>
                         </div>
 
                         <!-- SKL / Ijazah -->
-                        <div>
-                            <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: var(--dark);">
-                                SKL / Ijazah * <span style="font-size: 0.75rem; color: var(--gray-600);">(PDF/JPG/PNG)</span>
+                        <div class="form-upload-item">
+                            <label class="form-label" for="berkasIjazah">
+                                SKL / Ijazah / Surat Keterangan Aktif <span class="required">*</span>
+                                <span class="form-help">(Maks. 5 MB &bull; PDF, JPG, PNG)</span>
                             </label>
-                            <input type="file" id="berkasIjazah" accept=".pdf,.jpg,.jpeg,.png" class="dua-dropdown" style="max-width: 100%; width: 100%; padding: 10px; background: white;" required>
+                            <input type="file" id="berkasIjazah" accept=".pdf,.jpg,.jpeg,.png" class="form-control" required>
                         </div>
                     </div>
 
                     <!-- Tombol Submit -->
-                    <button type="submit" class="btn-primary-lg" style="width: 100%; border: none; cursor: pointer; text-align: center; justify-content: center;">
+                    <button type="submit" class="form-submit-btn">
                         <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran
                     </button>
                 </form>
@@ -152,66 +153,38 @@
 
     <!-- Footer -->
     <footer class="footer" style="padding: 30px 0;">
-        <div class="container text-center" style="text-align: center;">
+        <div class="container" style="text-align: center;">
             <p>&copy; 2026 Pondok Pesantren Syubbanul Wathon. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <!-- MODAL NOTIFIKASI MODERN (PENGGANTI ALERT) -->
+    <div class="modal" id="notifModal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-content notif-modal-content">
+            <div class="notif-icon" id="notifIcon">
+                <i class="fa-solid fa-circle-check" style="color: var(--primary);"></i>
+            </div>
+            <h3 id="notifTitle" class="notif-title">Pendaftaran Terkirim!</h3>
+            <div id="notifMessage" class="notif-message">Pesan notifikasi...</div>
+            <div class="modal-actions" style="justify-content: center; margin-top: 15px;">
+                <button type="button" class="btn-primary" id="notifOkBtn" style="min-width: 130px; justify-content: center;">
+                    Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Fungsi untuk menampilkan/menyembunyikan pilihan jurusan SMK
-        function cekPilihanSekolah() {
-            const pilihan = document.getElementById('pilihanSekolah').value;
-            const wrapperJurusan = document.getElementById('wrapperJurusan');
-            const selectJurusan = document.getElementById('pilihanJurusan');
-
-            if (pilihan === "SMK Syubbanul Wathon") {
-                wrapperJurusan.style.display = "block";
-                selectJurusan.setAttribute("required", "true"); // Wajib diisi jika pilih SMK
-            } else {
-                wrapperJurusan.style.display = "none";
-                selectJurusan.removeAttribute("required");
-                selectJurusan.value = ""; // Reset pilihan
-            }
-        }
-
-        // Otomatis memilih dropdown sekolah & mendeteksi SMK jika dibuka dari modal
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const sekolahParam = urlParams.get('sekolah');
-            
-            if (sekolahParam) {
-                const selectDropdown = document.getElementById('pilihanSekolah');
-                selectDropdown.value = sekolahParam;
-                cekPilihanSekolah(); // Jalankan fungsi agar kolom jurusan langsung muncul jika dari SMK
-            }
-        });
-
-        function handleRegister(event) {
-            event.preventDefault();
-            const nama = document.getElementById('namaLengkap').value;
-            const sekolah = document.getElementById('pilihanSekolah').value;
-            const jurusan = document.getElementById('pilihanJurusan').value;
-            
-            let pesan = `Terima kasih, ${nama}! Data pendaftaran Anda untuk unit ${sekolah}`;
-            if (sekolah === "SMK Syubbanul Wathon" && jurusan) {
-                pesan += ` dengan pilihan Jurusan (${jurusan})`;
-            }
-            pesan += ` berhasil dikirim. Panitia akan segera menghubungi Anda.`;
-
-            alert(pesan);
-            window.location.href = 'index.html';
-        }
-
-        // Data estimasi biaya per sekolah untuk ditampilkan di form
+        // Data estimasi biaya per unit sekolah
         const estimasiBiayaMap = {
-            "SMP Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
-            "MTs Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
-            "SMA Syubbanul Wathon": "Total Estimasi Awal: Rp 7.300.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
-            "SMK Syubbanul Wathon": "Total Estimasi Awal: Rp 7.800.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)",
-            "MA Syubbanul Wathon": "Total Estimasi Awal: Rp 7.300.000 (Termasuk Pendaftaran, Infaq Asrama, & Seragam)"
+            "SMP Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Pendaftaran, Infaq Asrama, & Seragam)",
+            "MTs Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Pendaftaran, Infaq Asrama, & Seragam)",
+            "SMA Syubbanul Wathon": "Total Estimasi Awal: Rp 7.300.000 (Pendaftaran, Infaq Asrama, & Seragam)",
+            "SMK Syubbanul Wathon": "Total Estimasi Awal: Rp 7.800.000 (Pendaftaran, Infaq Asrama, & Seragam)",
+            "MA Syubbanul Wathon": "Total Estimasi Awal: Rp 7.300.000 (Pendaftaran, Infaq Asrama, & Seragam)"
         };
 
-        // Modifikasi fungsi cekPilihanSekolah yang sudah ada
+        // Fungsi terpadu untuk mendeteksi pilihan sekolah, biaya, dan jurusan SMK
         function cekPilihanSekolah() {
             const pilihan = document.getElementById('pilihanSekolah').value;
             const wrapperJurusan = document.getElementById('wrapperJurusan');
@@ -229,13 +202,143 @@
                 selectJurusan.value = "";
             }
 
-            // Logika Tampil Informasi Biaya
+            // Logika Estimasi Biaya
             if (pilihan && estimasiBiayaMap[pilihan]) {
                 infoBiayaBox.style.display = "block";
                 teksBiaya.textContent = estimasiBiayaMap[pilihan];
             } else {
                 infoBiayaBox.style.display = "none";
             }
+        }
+
+        // Fungsi menampilkan dialog notifikasi kustom yang elegan
+        function showNotification(title, message, type = 'success', callback = null) {
+            const modal = document.getElementById('notifModal');
+            const icon = document.getElementById('notifIcon');
+            const titleEl = document.getElementById('notifTitle');
+            const msgEl = document.getElementById('notifMessage');
+            const okBtn = document.getElementById('notifOkBtn');
+
+            titleEl.textContent = title;
+            msgEl.innerHTML = message;
+
+            if (type === 'error') {
+                icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>';
+            } else if (type === 'warning') {
+                icon.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="color: #f59e0b;"></i>';
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #0d9488;"></i>';
+            }
+
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+
+            okBtn.onclick = function() {
+                modal.classList.remove('open');
+                modal.setAttribute('aria-hidden', 'true');
+                if (callback) callback();
+            };
+        }
+
+        // Validasi ukuran dan format file (Maks 5 MB)
+        function validateFile(fileInput, maxMB = 5) {
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const fileSizeMB = file.size / (1024 * 1024);
+                const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                const ext = file.name.split('.').pop().toLowerCase();
+
+                if (!allowedExtensions.includes(ext)) {
+                    showNotification(
+                        'Format Berkas Salah',
+                        `Berkas <strong>${file.name}</strong> tidak didukung. Mohon unggah berkas berformat PDF, JPG, atau PNG.`,
+                        'error'
+                    );
+                    fileInput.value = '';
+                    return false;
+                }
+
+                if (fileSizeMB > maxMB) {
+                    showNotification(
+                        'Ukuran Berkas Terlalu Besar',
+                        `Berkas <strong>${file.name}</strong> berukuran ${fileSizeMB.toFixed(2)} MB. Batas maksimal yang diizinkan adalah ${maxMB} MB.`,
+                        'warning'
+                    );
+                    fileInput.value = '';
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Inisialisasi event saat halaman siap
+        document.addEventListener('DOMContentLoaded', () => {
+            // Otomatis memilih dropdown sekolah jika dibuka dari parameter URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const sekolahParam = urlParams.get('sekolah');
+            
+            if (sekolahParam) {
+                const selectDropdown = document.getElementById('pilihanSekolah');
+                selectDropdown.value = sekolahParam;
+                cekPilihanSekolah();
+            }
+
+            // Event listener validasi langsung saat memilih berkas
+            const berkasTranskrip = document.getElementById('berkasTranskrip');
+            const berkasIjazah = document.getElementById('berkasIjazah');
+
+            if (berkasTranskrip) {
+                berkasTranskrip.addEventListener('change', function() {
+                    validateFile(this);
+                });
+            }
+            if (berkasIjazah) {
+                berkasIjazah.addEventListener('change', function() {
+                    validateFile(this);
+                });
+            }
+
+            // Keyboard ESC untuk menutup modal notifikasi
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('notifModal');
+                    if (modal && modal.classList.contains('open')) {
+                        modal.classList.remove('open');
+                        modal.setAttribute('aria-hidden', 'true');
+                    }
+                }
+            });
+        });
+
+        // Handler pengiriman formulir
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const berkasTranskrip = document.getElementById('berkasTranskrip');
+            const berkasIjazah = document.getElementById('berkasIjazah');
+
+            // Cek validasi berkas
+            if (!validateFile(berkasTranskrip) || !validateFile(berkasIjazah)) {
+                return;
+            }
+
+            const nama = document.getElementById('namaLengkap').value.trim();
+            const sekolah = document.getElementById('pilihanSekolah').value;
+            const jurusan = document.getElementById('pilihanJurusan').value;
+            
+            let infoJurusan = (sekolah === "SMK Syubbanul Wathon" && jurusan) 
+                ? `<br>Program Keahlian: <strong>${jurusan}</strong>` 
+                : '';
+
+            const successMessage = `
+                Terima kasih, <strong>${nama}</strong>!<br>
+                Data pendaftaran calon santri baru untuk unit <strong>${sekolah}</strong>${infoJurusan} telah berhasil dikirim.<br><br>
+                Tim sekretariat PSB akan segera memverifikasi kelengkapan berkas dan menghubungi nomor WhatsApp Anda.
+            `;
+
+            showNotification('Pendaftaran Terkirim!', successMessage, 'success', () => {
+                window.location.href = 'index.html';
+            });
         }
     </script>
 </body>
