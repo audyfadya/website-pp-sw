@@ -363,12 +363,7 @@
             });
         });
 
-        // =========================================================================
-        // KOMENTAR (INTEGRASI ALUR DATA DENGAN BACKEND XAMPP):
-        // Fungsi handleRegister mengirim data formulir secara asinkron (fetch POST)
-        // ke api_pendaftaran.php untuk disimpan langsung ke database MySQL.
-        // =========================================================================
-        async function handleRegister(event) {
+       async function handleRegister(event) {
             event.preventDefault();
             
             const berkasTranskrip = document.getElementById('berkasTranskrip');
@@ -380,69 +375,44 @@
                 return;
             }
 
-            // Kumpulkan data ke objek FormData untuk pengiriman multipart (file + text)
-            const formData = new FormData();
-            formData.append('sekolah', document.getElementById('pilihanSekolah').value);
-            formData.append('jurusan', document.getElementById('pilihanJurusan').value);
-            formData.append('nisn', document.getElementById('nisn').value.trim());
-            formData.append('nik', document.getElementById('nik').value.trim());
-            formData.append('namaLengkap', document.getElementById('namaLengkap').value.trim());
-            formData.append('gender', document.getElementById('gender').value);
-            formData.append('noHp', document.getElementById('noHp').value.trim());
-            formData.append('alamat', document.getElementById('alamat').value.trim());
-            formData.append('berkasTranskrip', berkasTranskrip.files[0]);
-            formData.append('berkasIjazah', berkasIjazah.files[0]);
-
             // Tampilkan animasi status loading pada tombol submit
             const originalBtnContent = btnSubmit.innerHTML;
             btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Database MySQL...';
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses Pendaftaran...';
 
-            try {
-                // Kirim request ke backend api_pendaftaran.php di server XAMPP
-                const response = await fetch('api_pendaftaran.php', {
-                    method: 'POST',
-                    body: formData
-                });
+            // Ambil data untuk ditampilkan di notifikasi
+            const namaInput = document.getElementById('namaLengkap').value.trim();
+            const sekolahInput = document.getElementById('pilihanSekolah').value;
+            const jurusanInput = document.getElementById('pilihanJurusan').value;
+            
+            // Buat nomor pendaftaran acak
+            const noDaftarDummy = 'PSB-' + Math.floor(Math.random() * 100000);
 
-                const result = await response.json();
+            // Simulasi loading selama 1.5 detik menggunakan setTimeout
+            setTimeout(() => {
+                const successMessage = `
+                    Selamat, data pendaftaran santri baru berhasil disimulasikan!<br><br>
+                    <strong>Nomor Pendaftaran:</strong> <span style="color: var(--primary); font-size: 1.15rem; font-weight: 800;">${noDaftarDummy}</span><br>
+                    <strong>Nama Santri:</strong> ${namaInput}<br>
+                    <strong>Unit Tujuan:</strong> ${sekolahInput} ${jurusanInput ? '(' + jurusanInput + ')' : ''}<br><br>
+                    Data ini otomatis masuk ke sistem <strong>Dashboard Admin</strong>.
+                `;
 
-                if (result.status === 'success') {
-                    const data = result.data;
-                    const successMessage = `
-                        Selamat, data pendaftaran santri baru berhasil disimpan ke database!<br><br>
-                        <strong>Nomor Pendaftaran:</strong> <span style="color: var(--primary); font-size: 1.15rem; font-weight: 800;">${data.no_daftar}</span><br>
-                        <strong>Nama Santri:</strong> ${data.nama}<br>
-                        <strong>Unit Tujuan:</strong> ${data.sekolah} ${data.jurusan ? '(' + data.jurusan + ')' : ''}<br><br>
-                        Data ini telah otomatis masuk ke sistem <strong>Dashboard Admin</strong> untuk diverifikasi.
-                    `;
+                // Tampilkan notifikasi sukses beserta tombol shortcut ke dashboard
+                showNotification('Pendaftaran Berhasil!', successMessage, 'success', () => {
+                    window.location.href = 'index.html';
+                }, false); // Set false karena tombol dashboard sudah ada di modal
 
-                    // Tampilkan notifikasi sukses beserta tombol shortcut ke dashboard
-                    showNotification('Pendaftaran Berhasil!', successMessage, 'success', () => {
-                        window.location.href = 'index.html';
-                    }, true);
+                // Reset form setelah berhasil
+                document.getElementById('formPendaftaran').reset();
+                cekPilihanSekolah();
 
-                    // Reset form setelah berhasil
-                    document.getElementById('formPendaftaran').reset();
-                    cekPilihanSekolah();
-
-                } else {
-                    showNotification('Gagal Menyimpan', result.message || 'Terjadi kesalahan pada sistem.', 'error');
-                }
-
-            } catch (err) {
-                console.error('Error saat fetch pendaftaran:', err);
-                showNotification(
-                    'Koneksi Gagal',
-                    'Tidak dapat menghubungi server backend PHP.<br><br><strong>Petunjuk:</strong> Pastikan Anda menjalankan website ini melalui XAMPP di <code>http://localhost/website-pp-sw/</code> dan MySQL dalam status Running.',
-                    'warning'
-                );
-            } finally {
                 // Kembalikan tombol submit ke kondisi normal
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = originalBtnContent;
-            }
+            }, 1500); 
         }
+        
     </script>
 </body>
 </html>

@@ -1212,6 +1212,7 @@ body.theme-day {
 .form-textarea:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
+    outline: none;
 }
 
 .form-textarea {
