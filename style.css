@@ -1150,9 +1150,13 @@ body.theme-day {
     }
 }
 
-/* ==========================================
-   STYLING FORMULIR PENDAFTARAN & UI COMPONENTS
-   ========================================== */
+/* =========================================================================
+   KOMENTAR (REFAKTORISASI CSS & KOMPONEN FORMULIR):
+   Kumpulan kelas berikut dibuat untuk menggantikan tumpukan inline styles (style="...")
+   pada formulir pendaftaran santri baru (pendaftaran.html), mendukung tata letak grid
+   responsif 1-2 kolom, komponen kotak unggah berkas, modal dialog notifikasi elegan,
+   serta focus outline ramah aksesibilitas (a11y).
+   ========================================================================= */
 .form-section {
     padding: 50px 0;
 }

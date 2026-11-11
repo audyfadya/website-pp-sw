@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ========================================================================= -->
+    <!-- KOMENTAR (PERBAIKAN SEO & METADATA): -->
+    <!-- Penambahan judul deskriptif, meta deskripsi, kata kunci pencarian, dan -->
+    <!-- Open Graph tags (og:title, og:description, og:image) untuk pratinjau medsos. -->
+    <!-- ========================================================================= -->
     <title>Pondok Pesantren Syubbanul Wathon - Pendidikan Berkarakter & Teknologi</title>
     <meta name="description" content="Portal resmi Pondok Pesantren Syubbanul Wathon Magelang. Menyelenggarakan pendidikan Islam terpadu jenjang SMP, MTs, SMA, SMK Vokasi, dan MA berasrama modern.">
     <meta name="keywords" content="Syubbanul Wathon, Pesantren Magelang, SMK Syubbanul Wathon, SMA Syubbanul Wathon, Tegalrejo, Santri, Pendaftaran Santri Baru">
@@ -44,6 +49,11 @@
                     <span class="brand-sub">Pondok Pesantren & Lembaga Pendidikan</span>
                 </div>
             </a>
+            <!-- ========================================================================= -->
+            <!-- KOMENTAR (PERBAIKAN AKSESIBILITAS MOBILE): -->
+            <!-- Tombol hamburger dilengkapi atribut aria-expanded dan aria-controls -->
+            <!-- agar status buka/tutup menu terdeteksi oleh teknologi asistif / screen reader. -->
+            <!-- ========================================================================= -->
             <button class="nav-toggle" id="navToggle" aria-label="Buka Menu Navigasi" aria-expanded="false" aria-controls="navMenu">
                 <i class="fa-solid fa-bars"></i>
             </button>
@@ -55,7 +65,9 @@
                 <a href="#informasi-pendaftaran" class="nav-link">Biaya & FAQ</a>
                 <a href="#lokasi" class="nav-link">Lokasi</a>
                 <a href="pendaftaran.html" class="btn-primary">Pendaftaran</a>
-                
+                <!-- <a href="dashboard.html" class="btn-outline-sm" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1.5px solid var(--primary); border-radius: 20px; font-size: 0.82rem; font-weight: 700; color: var(--primary); text-decoration: none;"> 
+                    <i class="fa-solid fa-lock"></i> Admin-->
+                </a>
             </nav>
         </div>
     </header>
@@ -186,6 +198,12 @@
                 <h2 class="section-title">Lembaga Di Bawah Naungan Yayasan</h2>
                 <p class="section-desc">Pilihan jenjang formal terakreditasi yang memadukan kurikulum nasional dan nilai pesantren.</p>
             </div>
+            <!-- ========================================================================= -->
+            <!-- KOMENTAR (PERBAIKAN AKSESIBILITAS a11y & KEYBOARD NAVIGATION): -->
+            <!-- Kartu jenjang pendidikan kini memiliki role="button", tabindex="0", -->
+            <!-- aria-haspopup="dialog" dan deskripsi aria-label sehingga pengguna dapat -->
+            <!-- memilih menggunakan keyboard (Tab) dan membukanya dengan Enter atau Space. -->
+            <!-- ========================================================================= -->
             <div class="jurusan-grid">
                 <div class="jurusan-card" onclick="openJurusanModal('SMK')" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Buka detail profil SMK Syubbanul Wathon">
                     <div class="jurusan-card-header">
@@ -399,6 +417,12 @@
         </div>
     </section>
 
+    <!-- ========================================================================= -->
+    <!-- KOMENTAR (PERBAIKAN MODAL DETAIL JURUSAN): -->
+    <!-- Modal kini menggunakan role="dialog", aria-modal="true", dan aria-labelledby. -->
+    <!-- Tombol aksi di dalamnya berstatus statis, dan script.js cukup memperbarui -->
+    <!-- href serta teksnya secara langsung tanpa menimpa innerHTML. -->
+    <!-- ========================================================================= -->
     <div class="modal" id="jurusanModal" role="dialog" aria-modal="true" aria-labelledby="m-title" aria-hidden="true">
         <div class="modal-content">
             <button class="modal-close" onclick="closeJurusanModal()" aria-label="Tutup Jendela Detail">&times;</button>
@@ -532,6 +556,10 @@
             <div class="maps-grid">
                 <!-- Kolom Peta Google Maps Embed -->
                 <div class="maps-iframe-wrapper">
+                    <!-- ========================================================================= -->
+                    <!-- KOMENTAR (PERBAIKAN WCAG 2.1 a11y): -->
+                    <!-- Iframe Google Maps diberi atribut title agar dikenali screen reader -->
+                    <!-- ========================================================================= -->
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.4952865913495!2d110.22415127588301!3d-7.410292792599723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a8f0003b17c17%3A0x6b099fec6f37f94d!2sPondok%20Pesantren%20Syubbanul%20Wathon!5e0!3m2!1sid!2sid!4v1710000000000!5m2!1sid!2sid" 
                         width="100%" 

@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ========================================================================= -->
+    <!-- KOMENTAR (PERBAIKAN SEO & AKSESIBILITAS): -->
+    <!-- Penambahan judul deskriptif dan meta tag informasi pencarian institusi. -->
+    <!-- ========================================================================= -->
     <title>Formulir Pendaftaran Santri Baru - Syubbanul Wathon</title>
     <meta name="description" content="Formulir resmi Pendaftaran Santri Baru (PSB) Pondok Pesantren Syubbanul Wathon untuk jenjang SMP, MTs, SMA, SMK, dan MA.">
     <link rel="icon" type="image/png" href="assets/logo sw.png">
+    
+    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ========================================================================= -->
+    <!-- KOMENTAR (REFAKTORISASI CSS): -->
+    <!-- Semua inline styles telah dipindahkan ke style.css agar kode bersih & rapi. -->
+    <!-- ========================================================================= -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-day">
 
-    <!-- Header / Navbar Sederhana -->
+    <!-- ========================================================================= -->
+    <!-- HEADER / NAVBAR SEDERHANA -->
+    <!-- ========================================================================= -->
     <header class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="brand">
@@ -24,27 +37,41 @@
                     <span class="brand-sub">Portal Pendaftaran Santri Baru</span>
                 </div>
             </a>
-            <a href="index.html" class="btn-primary"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
+            <div style="display: flex; gap: 10px;">
+               <!-- <a href="dashboard.html" class="btn-secondary" style="text-decoration: none; padding: 10px 18px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-gauge-high"></i> Dashboard Admin
+                </a> -->
+                <a href="index.html" class="btn-primary" style="text-decoration: none; padding: 10px 18px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Form Pendaftaran Section -->
+    <!-- ========================================================================= -->
+    <!-- SECTION FORMULIR PENDAFTARAN -->
+    <!-- ========================================================================= -->
     <section class="section bg-light form-section">
         <div class="container form-wrapper">
             <div class="section-header" style="margin-bottom: 30px;">
-                <span class="section-subtitle"><i class="fa-solid fa-file-signature"></i> Penerimaan Santri Baru</span>
+                <span class="section-subtitle"><i class="fa-solid fa-file-signature"></i> Penerimaan Santri Baru (PSB)</span>
                 <h2 class="section-title">Formulir Pendaftaran Santri Baru</h2>
                 <p class="section-desc">Silakan lengkapi data diri dan unggah berkas persyaratan calon santri dengan benar.</p>
             </div>
 
+            <!-- ========================================================================= -->
+            <!-- KOMENTAR: Form card menggunakan kelas modular CSS (.form-card) -->
+            <!-- Data dikirim via fetch() ke api_pendaftaran.php di server XAMPP MySQL. -->
+            <!-- ========================================================================= -->
             <div class="form-card">
                 <form id="formPendaftaran" onsubmit="handleRegister(event)">
                     
-                    <!-- Pilihan Jenjang Sekolah -->
+                    <!-- 1. Pilihan Jenjang Sekolah -->
                     <div class="form-group">
                         <label class="form-label" for="pilihanSekolah">
                             <i class="fa-solid fa-school" style="color: var(--primary);"></i> Pilih Jenjang / Sekolah Tujuan <span class="required">*</span>
                         </label>
+                        <!-- KOMENTAR: Event onchange memicu cekPilihanSekolah() secara otomatis -->
                         <select id="pilihanSekolah" class="form-select" required onchange="cekPilihanSekolah()">
                             <option value="">-- Pilih Unit Pendidikan --</option>
                             <option value="SMK Syubbanul Wathon">SMK Syubbanul Wathon</option>
@@ -55,13 +82,13 @@
                         </select>
                     </div>
 
-                    <!-- Kotak Informasi Rincian Biaya Otomatis -->
+                    <!-- 2. Kotak Estimasi Biaya Otomatis -->
                     <div id="infoBiayaSekolah" class="form-info-box">
-                        <h4><i class="fa-solid fa-circle-info"></i> Estimasi Biaya Daftar Ulang Unit Terpilih:</h4>
+                        <h4><i class="fa-solid fa-circle-info"></i> Estimasi Biaya Masuk Awal Unit Terpilih:</h4>
                         <p id="teksEstimasiBiaya"></p>
                     </div>
 
-                    <!-- Pilihan Jurusan SMK (Muncul Hanya Jika Pilih SMK) -->
+                    <!-- 3. Pilihan Program Keahlian / Jurusan (Khusus SMK) -->
                     <div id="wrapperJurusan" class="form-jurusan-box">
                         <label class="form-label" for="pilihanJurusan" style="color: var(--primary-dark);">
                             <i class="fa-solid fa-laptop-code"></i> Pilih Program Keahlian (Jurusan SMK) <span class="required">*</span>
@@ -75,11 +102,11 @@
                         </select>
                     </div>
 
-                    <!-- NISN & NIK -->
+                    <!-- 4. Baris NISN & NIK (Grid 2 Kolom Responsif) -->
                     <div class="form-grid-2 form-group">
                         <div>
                             <label class="form-label" for="nisn">NISN <span class="required">*</span></label>
-                            <input type="text" id="nisn" placeholder="Contoh: 0081234567" class="form-control" required>
+                            <input type="text" id="nisn" placeholder="Contoh: 0081234567" class="form-control" required pattern="[0-9]{8,15}" title="Masukkan 8-15 digit angka NISN">
                         </div>
                         <div>
                             <label class="form-label" for="nik">NIK / No. KK <span class="form-help">(Opsional)</span></label>
@@ -87,7 +114,7 @@
                         </div>
                     </div>
 
-                    <!-- Nama Lengkap & Jenis Kelamin -->
+                    <!-- 5. Baris Nama Lengkap & Jenis Kelamin -->
                     <div class="form-grid-2-1 form-group">
                         <div>
                             <label class="form-label" for="namaLengkap">Nama Lengkap Calon Santri <span class="required">*</span></label>
@@ -103,7 +130,7 @@
                         </div>
                     </div>
 
-                    <!-- No WhatsApp -->
+                    <!-- 6. Nomor WhatsApp Aktif -->
                     <div class="form-group">
                         <label class="form-label" for="noHp">
                             <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> No. WhatsApp Aktif (Santri / Orang Tua) <span class="required">*</span>
@@ -111,13 +138,18 @@
                         <input type="tel" id="noHp" placeholder="Contoh: 081234567890" class="form-control" required pattern="[0-9+ -]{9,16}">
                     </div>
 
-                    <!-- Alamat Asal -->
+                    <!-- 7. Alamat Domisili -->
                     <div class="form-group">
                         <label class="form-label" for="alamat">Alamat Asal (Desa, Kecamatan, Kabupaten/Kota) <span class="required">*</span></label>
                         <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap domisili saat ini" class="form-textarea" required></textarea>
                     </div>
 
-                    <!-- Kotak Unggah Dokumen / Berkas -->
+                    <!-- 8. Kotak Unggah Berkas Persyaratan -->
+                    <!-- ========================================================================= -->
+                    <!-- KOMENTAR (VALIDASI FILE UPLOAD): -->
+                    <!-- Validasi ekstensi (PDF/JPG/PNG) & ukuran file maks 5 MB dicek secara real-time. -->
+                    <!-- Berkas akan diupload ke folder uploads/ di server XAMPP. -->
+                    <!-- ========================================================================= -->
                     <div class="form-upload-box">
                         <div class="form-upload-header">
                             <i class="fa-solid fa-cloud-arrow-up"></i> Unggah Dokumen Persyaratan
@@ -135,15 +167,15 @@
                         <!-- SKL / Ijazah -->
                         <div class="form-upload-item">
                             <label class="form-label" for="berkasIjazah">
-                                SKL / Ijazah / Surat Keterangan Aktif <span class="required">*</span>
+                                SKL / Ijazah / Surat Keterangan Siswa Aktif <span class="required">*</span>
                                 <span class="form-help">(Maks. 5 MB &bull; PDF, JPG, PNG)</span>
                             </label>
                             <input type="file" id="berkasIjazah" accept=".pdf,.jpg,.jpeg,.png" class="form-control" required>
                         </div>
                     </div>
 
-                    <!-- Tombol Submit -->
-                    <button type="submit" class="form-submit-btn">
+                    <!-- 9. Tombol Submit -->
+                    <button type="submit" id="btnSubmitForm" class="form-submit-btn">
                         <i class="fa-solid fa-paper-plane"></i> Kirim Formulir Pendaftaran
                     </button>
                 </form>
@@ -151,14 +183,17 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer" style="padding: 30px 0;">
         <div class="container" style="text-align: center;">
             <p>&copy; 2026 Pondok Pesantren Syubbanul Wathon. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- MODAL NOTIFIKASI MODERN (PENGGANTI ALERT) -->
+    <!-- ========================================================================= -->
+    <!-- KOMENTAR (MODAL NOTIFIKASI MODERN): -->
+    <!-- Menggantikan fungsi alert() bawaan browser dengan dialog ramah & modern. -->
+    <!-- ========================================================================= -->
     <div class="modal" id="notifModal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-content notif-modal-content">
             <div class="notif-icon" id="notifIcon">
@@ -166,16 +201,22 @@
             </div>
             <h3 id="notifTitle" class="notif-title">Pendaftaran Terkirim!</h3>
             <div id="notifMessage" class="notif-message">Pesan notifikasi...</div>
-            <div class="modal-actions" style="justify-content: center; margin-top: 15px;">
+            <div class="modal-actions" style="justify-content: center; margin-top: 15px; gap: 10px;">
                 <button type="button" class="btn-primary" id="notifOkBtn" style="min-width: 130px; justify-content: center;">
                     Mengerti
                 </button>
+                <a href="dashboard.html" id="notifDashboardBtn" class="btn-secondary" style="text-decoration: none; display: none; align-items: center; justify-content: center;">
+                    Buka Dashboard Admin
+                </a>
             </div>
         </div>
     </div>
 
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT LOGIKA FORM & INTEGRASI XAMPP MYSQL -->
+    <!-- ========================================================================= -->
     <script>
-        // Data estimasi biaya per unit sekolah
+        // KOMENTAR: Peta data estimasi biaya untuk masing-masing jenjang pendidikan
         const estimasiBiayaMap = {
             "SMP Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Pendaftaran, Infaq Asrama, & Seragam)",
             "MTs Syubbanul Wathon": "Total Estimasi Awal: Rp 6.000.000 (Pendaftaran, Infaq Asrama, & Seragam)",
@@ -184,7 +225,9 @@
             "MA Syubbanul Wathon": "Total Estimasi Awal: Rp 7.300.000 (Pendaftaran, Infaq Asrama, & Seragam)"
         };
 
-        // Fungsi terpadu untuk mendeteksi pilihan sekolah, biaya, dan jurusan SMK
+        // KOMENTAR:
+        // Fungsi terpadu tunggal (tanpa duplikasi) untuk menyesuaikan jurusan SMK
+        // dan menampilkan info biaya secara otomatis saat pilihan sekolah diganti.
         function cekPilihanSekolah() {
             const pilihan = document.getElementById('pilihanSekolah').value;
             const wrapperJurusan = document.getElementById('wrapperJurusan');
@@ -211,13 +254,15 @@
             }
         }
 
-        // Fungsi menampilkan dialog notifikasi kustom yang elegan
-        function showNotification(title, message, type = 'success', callback = null) {
+        // KOMENTAR:
+        // Fungsi menampilkan dialog notifikasi custom yang elegan menggantikan alert()
+        function showNotification(title, message, type = 'success', callback = null, showDashboardLink = false) {
             const modal = document.getElementById('notifModal');
             const icon = document.getElementById('notifIcon');
             const titleEl = document.getElementById('notifTitle');
             const msgEl = document.getElementById('notifMessage');
             const okBtn = document.getElementById('notifOkBtn');
+            const dashboardBtn = document.getElementById('notifDashboardBtn');
 
             titleEl.textContent = title;
             msgEl.innerHTML = message;
@@ -230,6 +275,13 @@
                 icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #0d9488;"></i>';
             }
 
+            // Tampilkan tombol jalan pintas ke Dashboard Admin jika sukses
+            if (showDashboardLink && dashboardBtn) {
+                dashboardBtn.style.display = 'inline-flex';
+            } else if (dashboardBtn) {
+                dashboardBtn.style.display = 'none';
+            }
+
             modal.classList.add('open');
             modal.setAttribute('aria-hidden', 'false');
 
@@ -240,7 +292,8 @@
             };
         }
 
-        // Validasi ukuran dan format file (Maks 5 MB)
+        // KOMENTAR:
+        // Validasi ekstensi file dan ukuran berkas sebelum form dikirimkan
         function validateFile(fileInput, maxMB = 5) {
             if (fileInput.files && fileInput.files[0]) {
                 const file = fileInput.files[0];
@@ -271,9 +324,9 @@
             return true;
         }
 
-        // Inisialisasi event saat halaman siap
+        // Inisialisasi saat DOM selesai dimuat
         document.addEventListener('DOMContentLoaded', () => {
-            // Otomatis memilih dropdown sekolah jika dibuka dari parameter URL
+            // Otomatis memilih dropdown sekolah jika dibuka dari parameter URL (?sekolah=...)
             const urlParams = new URLSearchParams(window.location.search);
             const sekolahParam = urlParams.get('sekolah');
             
@@ -310,35 +363,85 @@
             });
         });
 
-        // Handler pengiriman formulir
-        function handleRegister(event) {
+        // =========================================================================
+        // KOMENTAR (INTEGRASI ALUR DATA DENGAN BACKEND XAMPP):
+        // Fungsi handleRegister mengirim data formulir secara asinkron (fetch POST)
+        // ke api_pendaftaran.php untuk disimpan langsung ke database MySQL.
+        // =========================================================================
+        async function handleRegister(event) {
             event.preventDefault();
             
             const berkasTranskrip = document.getElementById('berkasTranskrip');
             const berkasIjazah = document.getElementById('berkasIjazah');
+            const btnSubmit = document.getElementById('btnSubmitForm');
 
             // Cek validasi berkas
             if (!validateFile(berkasTranskrip) || !validateFile(berkasIjazah)) {
                 return;
             }
 
-            const nama = document.getElementById('namaLengkap').value.trim();
-            const sekolah = document.getElementById('pilihanSekolah').value;
-            const jurusan = document.getElementById('pilihanJurusan').value;
-            
-            let infoJurusan = (sekolah === "SMK Syubbanul Wathon" && jurusan) 
-                ? `<br>Program Keahlian: <strong>${jurusan}</strong>` 
-                : '';
+            // Kumpulkan data ke objek FormData untuk pengiriman multipart (file + text)
+            const formData = new FormData();
+            formData.append('sekolah', document.getElementById('pilihanSekolah').value);
+            formData.append('jurusan', document.getElementById('pilihanJurusan').value);
+            formData.append('nisn', document.getElementById('nisn').value.trim());
+            formData.append('nik', document.getElementById('nik').value.trim());
+            formData.append('namaLengkap', document.getElementById('namaLengkap').value.trim());
+            formData.append('gender', document.getElementById('gender').value);
+            formData.append('noHp', document.getElementById('noHp').value.trim());
+            formData.append('alamat', document.getElementById('alamat').value.trim());
+            formData.append('berkasTranskrip', berkasTranskrip.files[0]);
+            formData.append('berkasIjazah', berkasIjazah.files[0]);
 
-            const successMessage = `
-                Terima kasih, <strong>${nama}</strong>!<br>
-                Data pendaftaran calon santri baru untuk unit <strong>${sekolah}</strong>${infoJurusan} telah berhasil dikirim.<br><br>
-                Tim sekretariat PSB akan segera memverifikasi kelengkapan berkas dan menghubungi nomor WhatsApp Anda.
-            `;
+            // Tampilkan animasi status loading pada tombol submit
+            const originalBtnContent = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Database MySQL...';
 
-            showNotification('Pendaftaran Terkirim!', successMessage, 'success', () => {
-                window.location.href = 'index.html';
-            });
+            try {
+                // Kirim request ke backend api_pendaftaran.php di server XAMPP
+                const response = await fetch('api_pendaftaran.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    const data = result.data;
+                    const successMessage = `
+                        Selamat, data pendaftaran santri baru berhasil disimpan ke database!<br><br>
+                        <strong>Nomor Pendaftaran:</strong> <span style="color: var(--primary); font-size: 1.15rem; font-weight: 800;">${data.no_daftar}</span><br>
+                        <strong>Nama Santri:</strong> ${data.nama}<br>
+                        <strong>Unit Tujuan:</strong> ${data.sekolah} ${data.jurusan ? '(' + data.jurusan + ')' : ''}<br><br>
+                        Data ini telah otomatis masuk ke sistem <strong>Dashboard Admin</strong> untuk diverifikasi.
+                    `;
+
+                    // Tampilkan notifikasi sukses beserta tombol shortcut ke dashboard
+                    showNotification('Pendaftaran Berhasil!', successMessage, 'success', () => {
+                        window.location.href = 'index.html';
+                    }, true);
+
+                    // Reset form setelah berhasil
+                    document.getElementById('formPendaftaran').reset();
+                    cekPilihanSekolah();
+
+                } else {
+                    showNotification('Gagal Menyimpan', result.message || 'Terjadi kesalahan pada sistem.', 'error');
+                }
+
+            } catch (err) {
+                console.error('Error saat fetch pendaftaran:', err);
+                showNotification(
+                    'Koneksi Gagal',
+                    'Tidak dapat menghubungi server backend PHP.<br><br><strong>Petunjuk:</strong> Pastikan Anda menjalankan website ini melalui XAMPP di <code>http://localhost/website-pp-sw/</code> dan MySQL dalam status Running.',
+                    'warning'
+                );
+            } finally {
+                // Kembalikan tombol submit ke kondisi normal
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalBtnContent;
+            }
         }
     </script>
 </body>

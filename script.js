@@ -1,4 +1,15 @@
+// =========================================================================
 // JAVASCRIPT SYUBBANUL WATHON WEBSITE
+// =========================================================================
+// KOMENTAR:
+// Berkas ini menangani interaktivitas pada halaman utama (index.html):
+// 1. Data profil, keunggulan, dan prospek karir masing-masing jenjang sekolah
+// 2. Waktu sapaan dinamis (Pagi/Siang/Sore/Malam)
+// 3. Geolocation & sinkronisasi jadwal sholat presisi (API Aladhan)
+// 4. Amalan doa harian dengan fallback lokal cerdas & API Al-Qur'an (Surat/Ayat)
+// 5. Modal jurusan yang ramah aksesibilitas (aria-hidden, role="dialog", keyboard ESC & Enter)
+// 6. Navigasi mobile responsif (auto-close saat tautan diklik)
+// =========================================================================
 
 // --- DATA JURUSAN / LEMBAGA ---
 const dataJurusan = {

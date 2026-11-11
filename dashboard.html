@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin - Syubbanul Wathon</title>
-    <!-- Gunakan FontAwesome untuk Ikon -->
+    <!-- FontAwesome untuk Ikon & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styledashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- SIDEBAR NAVIGASI -->
+    <!-- ========================================================================= -->
+    <!-- KOMENTAR: SIDEBAR NAVIGASI ADMIN (SPA SWITCHER) -->
+    <!-- Menu samping menggunakan atribut data-target untuk berpindah modul tanpa reload. -->
+    <!-- ========================================================================= -->
     <aside class="sidebar">
         <div class="sidebar-brand">
             <i class="fa-solid fa-shield-halal"></i>
             <span>Admin Portal</span>
         </div>
         <ul class="sidebar-menu">
-            <!-- Tambahkan data-target sesuai ID modul -->
             <li class="active"><a href="#" data-target="modul-ringkasan"><i class="fa-solid fa-chart-pie"></i> Ringkasan</a></li>
             <li><a href="#" data-target="modul-psb"><i class="fa-solid fa-users"></i> Data PSB 2026</a></li>
             <li><a href="#" data-target="modul-berita"><i class="fa-solid fa-newspaper"></i> Kelola Berita</a></li>
@@ -31,19 +33,22 @@
         </div>
     </aside>
 
+    <!-- ========================================================================= -->
     <!-- AREA KONTEN UTAMA -->
+    <!-- ========================================================================= -->
     <main class="main-content">
-        <!-- HEADER ATAS TETAP SAMA -->
+        <!-- HEADER ATAS DENGAN INPUT PENCARIAN REAL-TIME -->
         <header class="top-header">
             <div class="header-search">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Cari nama pendaftar atau NISN...">
+                <!-- KOMENTAR: Input pencarian terhubung dengan event keyup di javascriptdashboard.js -->
+                <input type="text" id="searchInput" placeholder="Cari nama, NISN, atau unit...">
             </div>
             <div class="header-profile">
-                <span class="notification"><i class="fa-solid fa-bell"></i><span class="badge">3</span></span>
+                <span class="notification"><i class="fa-solid fa-bell"></i><span class="badge" id="notifBadge">3</span></span>
                 <div class="admin-info">
                     <span class="admin-name">Super Admin</span>
-                    <span class="admin-role">Sekretariat Pusat</span>
+                    <span class="admin-role">Sekretariat Pusat PSB</span>
                 </div>
                 <div class="admin-avatar">
                     <i class="fa-solid fa-user-tie"></i>
@@ -54,7 +59,9 @@
         <!-- AREA MODUL DINAMIS -->
         <div class="dashboard-body">
             
-            <!-- MODUL 1: RINGKASAN (DEFAULT TAMPIL) -->
+            <!-- ========================================================================= -->
+            <!-- MODUL 1: RINGKASAN STATISTIK (DAPAT DATA DARI XAMPP / MYSQL) -->
+            <!-- ========================================================================= -->
             <div id="modul-ringkasan" class="modul-content active">
                 <h2 class="page-title">Ringkasan Sistem</h2>
                 <div class="stat-grid">
@@ -62,21 +69,22 @@
                         <div class="stat-icon bg-blue"><i class="fa-solid fa-user-graduate"></i></div>
                         <div class="stat-details">
                             <h3>Total Pendaftar</h3>
-                            <p class="stat-number">1,245</p>
+                            <!-- KOMENTAR: Angka statistik diperbarui otomatis oleh fetch api_dashboard.php?action=stats -->
+                            <p class="stat-number" id="statTotal">...</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon bg-orange"><i class="fa-solid fa-file-circle-exclamation"></i></div>
                         <div class="stat-details">
                             <h3>Menunggu Verifikasi</h3>
-                            <p class="stat-number">42</p>
+                            <p class="stat-number" id="statMenunggu">...</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon bg-green"><i class="fa-solid fa-check-double"></i></div>
                         <div class="stat-details">
-                            <h3>Lolos Seleksi</h3>
-                            <p class="stat-number">850</p>
+                            <h3>Lolos Seleksi (Lengkap)</h3>
+                            <p class="stat-number" id="statLolos">...</p>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -89,14 +97,26 @@
                 </div>
             </div>
 
-            <!-- MODUL 2: DATA PSB (BERISI TABEL PENDAFTAR) -->
+            <!-- ========================================================================= -->
+            <!-- MODUL 2: MANAJEMEN DATA PENDAFTAR (PSB) TERHUBUNG MYSQL -->
+            <!-- ========================================================================= -->
             <div id="modul-psb" class="modul-content">
                 <h2 class="page-title">Manajemen Data Pendaftar (PSB)</h2>
                 <div class="data-section">
                     <div class="section-header">
                         <h3>Pendaftar Terbaru (PSB)</h3>
-                        <button class="btn-export"><i class="fa-solid fa-file-excel"></i> Export Excel</button>
+                        <div style="display: flex; gap: 10px;">
+                            <!-- KOMENTAR: Tombol Refresh Data langsung memuat ulang data terbaru dari database -->
+                            <button class="btn-action" id="btnRefresh" style="background-color: #64748b;" title="Muat Ulang Data">
+                                <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                            </button>
+                            <!-- KOMENTAR: Tombol Export Excel memicu unduhan file CSV/Excel langsung dari server backend -->
+                            <button class="btn-export" id="btnExport">
+                                <i class="fa-solid fa-file-excel"></i> Export Excel
+                            </button>
+                        </div>
                     </div>
+
                     <div class="table-responsive">
                         <table class="admin-table">
                             <thead>
@@ -109,30 +129,12 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <!-- KOMENTAR: tbody diisi secara dinamis oleh javascriptdashboard.js dari data database -->
+                            <tbody id="tabelPendaftarBody">
                                 <tr>
-                                    <td>#PSB-26001</td>
-                                    <td><strong>Ahmad Fauzi</strong></td>
-                                    <td>SMK (PPLG)</td>
-                                    <td>12 Okt 2026</td>
-                                    <td><span class="status-badge status-pending">Menunggu</span></td>
-                                    <td><button class="btn-action">Verifikasi</button></td>
-                                </tr>
-                                <tr>
-                                    <td>#PSB-26002</td>
-                                    <td><strong>Siti Aminah</strong></td>
-                                    <td>SMA (MIPA)</td>
-                                    <td>12 Okt 2026</td>
-                                    <td><span class="status-badge status-success">Lengkap</span></td>
-                                    <td><button class="btn-action btn-view">Lihat</button></td>
-                                </tr>
-                                <tr>
-                                    <td>#PSB-26003</td>
-                                    <td><strong>Budi Santoso</strong></td>
-                                    <td>MTs</td>
-                                    <td>11 Okt 2026</td>
-                                    <td><span class="status-badge status-danger">Ditolak</span></td>
-                                    <td><button class="btn-action btn-view">Lihat</button></td>
+                                    <td colspan="6" style="text-align: center; padding: 25px; color: var(--text-muted);">
+                                        <i class="fa-solid fa-spinner fa-spin"></i> Memuat data pendaftar dari MySQL...
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -140,41 +142,127 @@
                 </div>
             </div>
 
-            <!-- MODUL 3: KELOLA BERITA (KOSONGAN SEMENTARA) -->
+            <!-- MODUL 3: KELOLA BERITA (PLACEHOLDER) -->
             <div id="modul-berita" class="modul-content">
                 <h2 class="page-title">Kelola Berita & Pengumuman</h2>
                 <div class="data-section">
-                    <p>Halaman form input berita akan diletakkan di sini.</p>
+                    <p style="color: var(--text-muted);"><i class="fa-solid fa-info-circle"></i> Modul pengelolaan postingan berita pesantren.</p>
                 </div>
             </div>
 
-            <!-- MODUL 4: SETTING BIAYA -->
+            <!-- MODUL 4: SETTING BIAYA (PLACEHOLDER) -->
             <div id="modul-biaya" class="modul-content">
                 <h2 class="page-title">Pengaturan Biaya Pendidikan</h2>
                 <div class="data-section">
-                    <p>Tabel atau formulir perubahan rincian biaya pendaftaran akan tampil di sini.</p>
+                    <p style="color: var(--text-muted);"><i class="fa-solid fa-info-circle"></i> Modul pengaturan besaran biaya pendaftaran dan infaq asrama.</p>
                 </div>
             </div>
 
-            <!-- MODUL 5: PESAN MASUK -->
+            <!-- MODUL 5: PESAN MASUK (PLACEHOLDER) -->
             <div id="modul-pesan" class="modul-content">
                 <h2 class="page-title">Kotak Pesan Masuk (Inbox)</h2>
                 <div class="data-section">
-                    <p>Daftar pesan pertanyaan dari form kontak website utama akan tampil di sini.</p>
+                    <p style="color: var(--text-muted);"><i class="fa-solid fa-info-circle"></i> Modul penampung pesan kontak dan pertanyaan dari pengunjung web.</p>
                 </div>
             </div>
 
-            <!-- MODUL 6: PENGATURAN -->
+            <!-- MODUL 6: PENGATURAN (PLACEHOLDER) -->
             <div id="modul-pengaturan" class="modul-content">
                 <h2 class="page-title">Pengaturan Sistem</h2>
                 <div class="data-section">
-                    <p>Form ganti password admin, upload logo, dll.</p>
+                    <p style="color: var(--text-muted);"><i class="fa-solid fa-info-circle"></i> Modul konfigurasi sistem dan manajemen profil admin.</p>
                 </div>
             </div>
 
         </div>
     </main>
-    <!-- HUBUNGKAN FILE JAVASCRIPT DI SINI -->
+
+    <!-- ========================================================================= -->
+    <!-- KOMENTAR: MODAL DETAIL LENGKAP BIODATA SANTRI -->
+    <!-- Muncul saat admin menekan tombol 'Lihat' di tabel pendaftar. -->
+    <!-- ========================================================================= -->
+    <div class="modal" id="modalDetailPendaftar" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" id="btnCloseDetail" aria-label="Tutup Detail">&times;</button>
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-id-card" style="color: #10b981;"></i> Biodata Calon Santri</h3>
+            </div>
+            
+            <table class="detail-table">
+                <tbody>
+                    <tr>
+                        <td>Nomor Registrasi:</td>
+                        <td><strong id="detNoDaftar">-</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Nama Lengkap:</td>
+                        <td><strong id="detNama">-</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Unit Tujuan:</td>
+                        <td><span id="detSekolah">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Jurusan / Peminatan:</td>
+                        <td><span id="detJurusan">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>NISN:</td>
+                        <td><span id="detNisn">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>NIK / No. KK:</td>
+                        <td><span id="detNik">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Kelamin:</td>
+                        <td><span id="detGender">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>No. WhatsApp:</td>
+                        <td><span id="detNoHp">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Alamat Domisili:</td>
+                        <td><span id="detAlamat">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Status Berkas:</td>
+                        <td><span id="detStatusBadge" class="status-badge status-pending">Menunggu</span></td>
+                    </tr>
+                    <tr>
+                        <td>Berkas Transkrip:</td>
+                        <td>
+                            <a href="#" id="detLinkTranskrip" target="_blank" class="file-link">
+                                <i class="fa-solid fa-file-pdf"></i> Buka Transkrip Nilai
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Berkas SKL / Ijazah:</td>
+                        <td>
+                            <a href="#" id="detLinkIjazah" target="_blank" class="file-link">
+                                <i class="fa-solid fa-file-pdf"></i> Buka Ijazah / SKL
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Tombol Aksi Verifikasi / Tolak Status dari Modal -->
+            <div class="modal-actions">
+                <button type="button" class="btn-reject" id="btnModalTolak">
+                    <i class="fa-solid fa-ban"></i> Tolak Berkas
+                </button>
+                <button type="button" class="btn-approve" id="btnModalSetujui">
+                    <i class="fa-solid fa-check"></i> Verifikasi (Lengkap)
+                </button>
+                <button type="button" class="btn-close-modal" id="btnModalTutup">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script JavaScript Dashboard -->
     <script src="javascriptdashboard.js"></script>
 </body>
 </html>
