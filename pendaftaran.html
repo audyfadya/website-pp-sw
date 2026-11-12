@@ -314,7 +314,7 @@
                 if (fileSizeMB > maxMB) {
                     showNotification(
                         'Ukuran Berkas Terlalu Besar',
-                        `Berkas <strong>${file.name}</strong> berukuran ${fileSizeMB.toFixed(2)} MB. Batas maksimal yang diizinkan adalah ${maxMB} MB.`,
+                        `Berkas <strong>${file.name}</strong> berukuran ${fileSizeMB.toFixed(5)} MB. Batas maksimal yang diizinkan adalah ${maxMB} MB.`,
                         'warning'
                     );
                     fileInput.value = '';
