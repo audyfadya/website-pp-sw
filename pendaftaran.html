@@ -298,13 +298,13 @@
             if (fileInput.files && fileInput.files[0]) {
                 const file = fileInput.files[0];
                 const fileSizeMB = file.size / (1024 * 1024);
-                const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+                const allowedExtensions = ['pdf'];
                 const ext = file.name.split('.').pop().toLowerCase();
 
                 if (!allowedExtensions.includes(ext)) {
                     showNotification(
                         'Format Berkas Salah',
-                        `Berkas <strong>${file.name}</strong> tidak didukung. Mohon unggah berkas berformat PDF, JPG, atau PNG.`,
+                        `Berkas <strong>${file.name}</strong> tidak didukung. Mohon unggah berkas berformat PDF.`,
                         'error'
                     );
                     fileInput.value = '';
