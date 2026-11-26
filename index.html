@@ -160,7 +160,7 @@
             </div>
             
             <div class="amalan-grid">
-                <!-- Kolom Doa -->
+                <!-- Kolom Doa (Tidak Diubah) -->
                 <div class="dua-box">
                     <div class="dua-header">
                         <select id="doaDropdown" class="dua-dropdown">
@@ -173,15 +173,31 @@
                     <div class="dua-meaning" id="dua-meaning">...</div>
                 </div>
 
-                <!-- Kolom Ayat Al-Qur'an dengan Dual Dropdown -->
+                <!-- Kolom Ayat Al-Qur'an dengan Search Surat & Navigasi Panah Ayat -->
                 <div class="dua-box quran-box">
-                    <div class="dua-header" style="gap: 10px;">
-                        <select id="quranDropdown" class="dua-dropdown">
-                            <option value="">Memuat Surat...</option>
-                        </select>
-                        <select id="ayatDropdown" class="dua-dropdown" style="max-width: 110px;">
-                            <option value="">Ayat</option>
-                        </select>
+                    <div class="dua-header quran-header">
+                        <!-- Input Search Surat + Daftar Hasil Melayang -->
+                        <div class="quran-search-wrapper" id="quranSearchWrapper">
+                            <input 
+                                type="text" 
+                                id="quranSearchInput" 
+                                class="dua-dropdown quran-search-input" 
+                                placeholder="Cari nama atau nomor surat..." 
+                                autocomplete="off"
+                            />
+                            <ul id="quranSearchResults" class="quran-search-results"></ul>
+                        </div>
+
+                        <!-- Navigasi Panah Kiri & Kanan Ayat -->
+                        <div class="ayat-input-wrapper">
+                            <button type="button" id="prevAyatBtn" class="ayat-nav-btn" aria-label="Ayat Sebelumnya" title="Ayat Sebelumnya">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <span class="ayat-display">Ayat <strong id="ayatCurrent">1</strong> <span id="ayatTotal">/ 7</span></span>
+                            <button type="button" id="nextAyatBtn" class="ayat-nav-btn" aria-label="Ayat Berikutnya" title="Ayat Berikutnya">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="dua-arabic" id="quran-arabic">...</div>
                     <div class="dua-latin" id="quran-latin">...</div>

@@ -1,361 +1,337 @@
-// =========================================================================
-// JAVASCRIPT SYUBBANUL WATHON WEBSITE
-// =========================================================================
-// KOMENTAR:
-// Berkas ini menangani interaktivitas pada halaman utama (index.html):
-// 1. Data profil, keunggulan, dan prospek karir masing-masing jenjang sekolah
-// 2. Waktu sapaan dinamis (Pagi/Siang/Sore/Malam)
-// 3. Geolocation & sinkronisasi jadwal sholat presisi (API Aladhan)
-// 4. Amalan doa harian dengan fallback lokal cerdas & API Al-Qur'an (Surat/Ayat)
-// 5. Modal jurusan yang ramah aksesibilitas (aria-hidden, role="dialog", keyboard ESC & Enter)
-// 6. Navigasi mobile responsif (auto-close saat tautan diklik)
-// =========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    initGreetingAndLocation();
+    initMobileNav();
+    initPrayerTimes();
+    initDoaHarian();
+    initQuranDropdown();
+    initJurusanCardsKeyboard();
+    initGallerySlider();
+});
 
-// --- DATA JURUSAN / LEMBAGA ---
-const dataJurusan = {
-    'SMK': {
-        title: 'SMK Syubbanul Wathon',
-        subtitle: 'Pendidikan Vokasi & Keahlian Berbasis Industri',
-        icon: '<img src="assets/logosekolah2/SMK-T.png" alt="Logo SMK" style="height: 50px; width: auto; object-fit: contain;">',
-        foto: 'assets/fotosmk/IMG_0061-scaled.jpg',
-        desc: 'SMK Syubbanul Wathon mencetak tenaga ahli vokasi yang siap kerja, berdaya saing tinggi, dan berakhlak mulia. Pilihan Jurusan/Program Keahlian unggulan:\n\n' +
-              '• PPLG (Pengembangan Perangkat Lunak & Gim): Belajar koding web, aplikasi mobile (Flutter/Python), database, & UI/UX.\n' +
-              '• TJKT (Teknik Jaringan Komputer & Telekomunikasi): Belajar server, fiber optik, Mikrotik/Cisco, & cybersecurity.\n' +
-              '• DKV (Desain Komunikasi Visual): Belajar desain grafis, editing video, animasi 3D, & fotografi.\n' +
-              '• TKRO (Teknik Kendaraan Ringan Otomotif): Belajar perawatan mesin mobil EFI, kelistrikan, & diagnosa scanner komputer.\n\n' +
-              'Keunggulan: Fasilitas lab komputer & bengkel modern, sertifikasi kompetensi industri, serta penyaluran kerja & bimbingan teknopreneur.',
-        prospects: [
-            'Software Engineer & Web Developer',
-            'Network Specialist & Cloud Admin',
-            'Graphic Designer & Content Creator',
-            'Teknisi Otomotif & Service Advisor',
-            'Wirausaha Industri Kreatif / Startup'
-        ]
-    },
-    'SMA': {
-        title: 'SMA Syubbanul Wathon',
-        subtitle: 'Persiapan Unggul Perguruan Tinggi & Sains Terpadu',
-        icon: '<img src="assets/logosekolah2/SMA.png" alt="Logo SMA" style="height: 50px; width: auto; object-fit: contain;">',
-        foto: 'assets/fotosmk/IMG_3537-2048x1365.jpg',
-        desc: 'SMA Syubbanul Wathon berfokus pada penguatan akademik sains, teknologi, dan ilmu sosial yang terpadu dengan nilai-nilai pesantren. Pilihan Peminatan/Jurusan:\n\n' +
-              '• Peminatan MIPA (Matematika & IPA): Fokus pada biologi, fisika, kimia, matematika lanjut, dan riset ilmiah.\n' +
-              '• Peminatan IPS (Ilmu Pengetahuan Sosial): Fokus pada sosiologi, ekonomi, geografi, dan kewirausahaan sosial.\n\n' +
-              'Keunggulan: Program bimbingan intensif UTBK-SNBT/Kedinasan, kelas bilingual (Bahasa Inggris & Arab), program ekstrakurikuler olimpiade sains, serta pendampingan karir perguruan tinggi negeri (PTN) & luar negeri.',
-        prospects: [
-            'Melanjutkan ke Perguruan Tinggi Negeri (PTN) / Kedinasan',
-            'Kuliah di Universitas Luar Negeri',
-            'Peneliti & Akademisi Sains / Sosial',
-            'Praktisi Hukum, Ekonomi, & Sosial'
-        ]
-    },
-    'SMP': {
-        title: 'SMP Syubbanul Wathon',
-        subtitle: 'Pendidikan Menengah Pertama Berbasis Sains & Tahfidz',
-        icon: '<img src="assets/logosekolah2/SMP-T.png" alt="Logo SMP" style="height: 50px; width: auto; object-fit: contain;">',
-        foto: 'assets/foto m/DSC04055-min-1024x683.jpg',
-        desc: 'SMP Syubbanul Wathon menyelenggarakan pendidikan dasar menengah yang seimbang antara kurikulum nasional dan penguatan karakter islami santri. Program Keunggulan & Pembelajaran:\n\n' +
-              '• Program Tahfidzul Qur\'an: Target hafalan Al-Qur\'an Juz 30 dan juz pilihan.\n' +
-              '• Literasi Digital & Basic IT: Pengenalan dasar komputer, logika koding dasar, dan multimedia.\n' +
-              '• Pengasuhan Karakter Rabbani: Kedisiplinan santri, pembiasaan ibadah yaumiyah, dan pembentukan akhlakul karimah 24 jam.\n\n' +
-              'Keunggulan: Pengajar profesional, lingkungan asrama yang kondusif, serta kesiapan siswa berprestasi di tingkat SMA/SMK unggulan.',
-        prospects: [
-            'Lulusan Berkarakter Qur\'ani & Mandiri',
-            'Persiapan Lanjut ke SMA / SMK Unggulan',
-            'Penguasaan Dasar Bahasa & Sains'
-        ]
-    },
-    'MA': {
-        title: 'MA Syubbanul Wathon',
-        subtitle: 'Madrasah Aliyah Keagamaan & Kajian Kitab Kuning',
-        icon: '<img src="assets/logosekolah2/EM-MA.png" alt="Logo MA" style="height: 50px; width: auto; object-fit: contain;">',
-        foto: 'assets/foto m/jurnalistik.jpg',
-        desc: 'MA Syubbanul Wathon memberikan pendalaman keilmuan Islam secara komprehensif dan mendalam. Pilihan Peminatan Program:\n\n' +
-              '• Program Keagamaan (PK / IIK): Pendalaman kajian Kitab Kuning (Fiqih, Tafsir, Hadits, Nahwu-Shorof ala API Tegalrejo).\n' +
-              '• Peminatan MIPA & IPS Aliyah: Perpaduan kurikulum madrasah Kemenag dan ilmu pengetahuan umum.\n\n' +
-              'Keunggulan: Bahasa Arab aktif (Kemampuan Balaghoh & Muhatasatsah), sanad keilmuan pesantren salaf yang bersambung, serta persiapan masuk Universitas Islam Dalam & Luar Negeri (UIN, Al-Azhar Mesir, Middle East).',
-        prospects: [
-            'Kuliah di Universitas Al-Azhar Kairo / Timur Tengah',
-            'Melanjutkan ke UIN / IAIN / Perguruan Tinggi Islam',
-            'Kader Ulama, Da\'i, & Tokoh Masyarakat',
-            'Pengajar Pendidikan Agama & Bahasa Arab'
-        ]
-    },
-    'MTs': {
-        title: 'MTs Syubbanul Wathon',
-        subtitle: 'Madrasah Tsanawiyah Terpadu Keagamaan & Muamalah',
-        icon: '<img src="assets/logosekolah2/logo-mts-newest.png" alt="Logo MTs" style="height: 50px; width: auto; object-fit: contain;">',
-        foto: 'assets/foto m/DSC08087-min-1024x683.jpg',
-        desc: 'MTs Syubbanul Wathon membentuk fondasi agama dan akademik yang kokoh di tingkat tsanawiyah. Program Keunggulan & Pembelajaran:\n\n' +
-              '• Pendalaman Dasar Kitab Kuning: Pengenalan dasar Bahasa Arab, Safinatun Najah, & Aqidatul Awam.\n' +
-              '• Pengenalan Perbankan & Ekonomi Syariah: Literasi dasar keuangan islami, tata kelola muamalah, dan kejujuran.\n' +
-              '• Pembiasaan Bahasa & Ibadah: Praktik percakapan bahasa Arab/Inggris harian dan setoran hafalan doa & surah pendek.\n\n' +
-              'Keunggulan: Memadukan kurikulum Kemenag dengan nilai-nilai pesantren salafiyah untuk mencetak santri berilmu dan berakhlak.',
-        prospects: [
-            'Persiapan Lanjut ke MA / SMA / SMK Pesantren',
-            'Lulusan Berwawasan Muamalah & Agamis',
-            'Penguasaan Dasar Bahasa Arab & Kitab Kuning'
-        ]
+// =========================================================================
+// 1. SAPAAN WAKTU & DETEKSI LOKASI TOP BAR
+// =========================================================================
+function initGreetingAndLocation() {
+    const timeBadge = document.getElementById('time-badge');
+    const locationText = document.getElementById('location-text');
+    const hour = new Date().getHours();
+
+    if (timeBadge) {
+        let greeting = 'Selamat Malam';
+        let icon = 'fa-moon';
+
+        if (hour >= 4 && hour < 11) {
+            greeting = 'Selamat Pagi';
+            icon = 'fa-sun';
+        } else if (hour >= 11 && hour < 15) {
+            greeting = 'Selamat Siang';
+            icon = 'fa-sun';
+        } else if (hour >= 15 && hour < 18) {
+            greeting = 'Selamat Sore';
+            icon = 'fa-cloud-sun';
+        }
+
+        timeBadge.innerHTML = `<i class="fa-regular ${icon}"></i> ${greeting}`;
     }
-};
 
-// --- DATA CADANGAN LOKAL (Digunakan otomatis jika API Doa mati) ---
-const dataDoaCadangan = [
+    if (locationText) {
+        locationText.innerHTML = `<i class="fa-solid fa-location-dot"></i> Tegalrejo, Magelang`;
+    }
+}
+
+// =========================================================================
+// 2. MENU NAVIGASI MOBILE (HAMBURGER)
+// =========================================================================
+function initMobileNav() {
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    if (!navToggle || !navMenu) return;
+
+    navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('show');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('show');
+            navToggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+}
+
+// =========================================================================
+// 3. JADWAL SHOLAT HARI INI (API ALADHAN + FALLBACK)
+// =========================================================================
+async function initPrayerTimes() {
+    const subText = document.getElementById('prayer-location-sub');
+
+    const updateUI = (timings, cityLabel) => {
+        const map = {
+            subuh: timings.Fajr,
+            dzuhur: timings.Dhuhr,
+            ashar: timings.Asr,
+            maghrib: timings.Maghrib,
+            isya: timings.Isha
+        };
+
+        Object.entries(map).forEach(([key, val]) => {
+            const el = document.getElementById(`time-${key}`);
+            if (el && val) {
+                const cleanTime = val.split(' ')[0];
+                el.innerText = `${cleanTime} WIB`;
+            }
+        });
+
+        if (subText) {
+            subText.innerText = `Menampilkan waktu sholat presisi untuk wilayah ${cityLabel}`;
+        }
+
+        highlightActivePrayer(map);
+    };
+
+    try {
+        const res = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Magelang&country=Indonesia&method=20');
+        const json = await res.json();
+        if (json.code === 200 && json.data?.timings) {
+            updateUI(json.data.timings, 'Magelang & Sekitarnya');
+        }
+    } catch (err) {
+        console.warn('Menggunakan jadwal sholat default:', err);
+    }
+}
+
+function highlightActivePrayer(timings) {
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+    const toMinutes = (timeStr) => {
+        if (!timeStr) return 0;
+        const [h, m] = timeStr.split(' ')[0].split(':').map(Number);
+        return h * 60 + m;
+    };
+
+    const schedule = [
+        { id: 'card-subuh', min: toMinutes(timings.subuh) },
+        { id: 'card-dzuhur', min: toMinutes(timings.dzuhur) },
+        { id: 'card-ashar', min: toMinutes(timings.ashar) },
+        { id: 'card-maghrib', min: toMinutes(timings.maghrib) },
+        { id: 'card-isya', min: toMinutes(timings.isya) }
+    ];
+
+    let activeId = 'card-isya';
+    for (let i = 0; i < schedule.length; i++) {
+        if (currentMinutes < schedule[i].min) {
+            activeId = schedule[i].id;
+            break;
+        }
+    }
+
+    document.querySelectorAll('.prayer-card').forEach(card => card.classList.remove('active-prayer'));
+    const activeCard = document.getElementById(activeId);
+    if (activeCard) activeCard.classList.add('active-prayer');
+}
+
+// =========================================================================
+// 4. FITUR DOA HARIAN PILIHAN
+// =========================================================================
+const fallbackDoaList = [
     {
-        title: "Doa Sebelum Belajar",
-        arabic: "رَضِيْتُ بِاللهِ رَبًّا، وَبِالْإِسْلَامِ دِيْنًا، وَبِمُحَمَّدٍ نَبِيًّا وَرَسُوْلًا، رَبِّ زِدْنِيْ عِلْمًا وَارْزُقْنِيْ فَهْمًا",
-        latin: "Rodhitu billahi robba, wa bil-islami dina, wa bi-muhammadin nabiyyaw wa rosula. Robbi zidni 'ilmaw warzuqni fahma.",
-        translation: "Aku ridho Allah sebagai Tuhanku, Islam sebagai agamaku, dan Nabi Muhammad sebagai Nabi dan Rasulku. Ya Allah, tambahkanlah aku ilmu dan berilah aku karunia untuk memahaminya."
+        doa: "Doa Sebelum Tidur",
+        ayat: "بِسْمِكَ اللّٰهُمَّ اَحْيَا وَاَمُوْتُ",
+        latin: "Bismikallohumma ahya wa amuutu",
+        artinya: "Dengan menyebut nama-Mu ya Allah, aku hidup dan aku mati"
     },
     {
-        title: "Doa Pembuka Hati / Kelancaran Bicara",
-        arabic: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي",
-        latin: "Robbishroh lii shodrii, wa yassir lii amrii, wahlul 'uqdatam mil lisaanii, yafqohuu qowlii.",
-        translation: "Ya Tuhanku, lapangkanlah dadaku, mudahkanlah urusanku, dan melepaskan kekakuan dari lidahku, supaya mereka mengerti perkataanku."
+        doa: "Doa Bangun Tidur",
+        ayat: "اَلْحَمْدُ لِلّٰهِ الَّذِيْ أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُوْرُ",
+        latin: "Alhamdu lillahil-ladzi ahyana ba'da ma amatana wa ilaihin-nusyur",
+        artinya: "Segala puji bagi Allah yang telah menghidupkan kami setelah mematikan kami, dan kepada-Nya kami kembali"
     },
     {
-        title: "Doa Kebaikan Dunia & Akhirat",
-        arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
-        latin: "Rabbana atina fid-dunya hasanah, wa fil-akhirati hasanah, wa qina 'adzaban-nar.",
-        translation: "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat dan peliharalah kami dari siksa neraka."
+        doa: "Doa Sebelum Makan",
+        ayat: "اَللّٰهُمَّ بَارِكْ لَنَا فِيْمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ",
+        latin: "Allahumma barik lana fima razaqtana wa qina 'adzaban-nar",
+        artinya: "Ya Allah, berkahilah rezeki yang Engkau berikan kepada kami dan peliharalah kami dari siksa api neraka"
     },
     {
-        title: "Doa Untuk Kedua Orang Tua",
-        arabic: "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
-        latin: "Rabbighfir lii wa liwaalidayya warhamhuma kamaa rabbayaanii shaghiiraa.",
-        translation: "Ya Tuhanku, ampunilah aku dan kedua orang tuaku, serta kasihilah keduanya sebagaimana mereka telah merawatku sewaktu kecil."
+        doa: "Doa Sesudah Makan",
+        ayat: "اَلْحَمْدُ لِلّٰهِ الَّذِيْ أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مِنَ الْمُسْلِمِيْنَ",
+        latin: "Alhamdulillahil-ladzi ath'amana wa saqana wa ja'alana minal muslimin",
+        artinya: "Segala puji bagi Allah yang telah memberi kami makan dan minum serta menjadikan kami termasuk golongan orang muslim"
+    },
+    {
+        doa: "Doa Sebelum Belajar",
+        ayat: "رَبِّ زِدْنِيْ عِلْمًا وَارْزُقْنِيْ فَهْمًا",
+        latin: "Rabbi zidni 'ilman warzuqni fahman",
+        artinya: "Ya Tuhanku, tambahkanlah ilmu kepadaku dan berilah aku karunia untuk dapat memahaminya"
+    },
+    {
+        doa: "Doa Kedua Orang Tua",
+        ayat: "رَبِّ اغْفِرْ لِيْ وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِيْ صَغِيْرًا",
+        latin: "Rabbighfir li waliwalidayya warhamhuma kama rabbayani shaghira",
+        artinya: "Ya Tuhanku, ampunilah dosaku dan dosa kedua orang tuaku, serta kasihilah mereka sebagaimana mereka mengasihiku di waktu kecil"
+    },
+    {
+        doa: "Doa Kebaikan Dunia & Akhirat",
+        ayat: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+        latin: "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina 'adzaban-nar",
+        artinya: "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari siksa neraka"
     }
 ];
 
-// INISIALISASI SAAT HALAMAN DIMUAT
-document.addEventListener('DOMContentLoaded', () => {
-    initDynamicTimeGreeting();
-    initLocationAndPrayerTimes();
-    
-    // Inisialisasi Amalan Harian (Doa & Quran)
-    initDoaDropdown();
-    initQuranDropdown();
-    
-    setupEventListeners();
-});
-
-// 1. Fitur Waktu Dinamis
-function initDynamicTimeGreeting() {
-    const timeBadge = document.getElementById('time-badge');
-    const hour = new Date().getHours();
-    let greetingText = '';
-    let iconClass = '';
-
-    document.body.className = 'theme-day';
-
-    if (hour >= 3 && hour < 10) {
-        greetingText = 'Selamat Pagi'; iconClass = 'fa-regular fa-sun';
-    } else if (hour >= 10 && hour < 15) {
-        greetingText = 'Selamat Siang'; iconClass = 'fa-solid fa-sun';
-    } else if (hour >= 15 && hour < 18) {
-        greetingText = 'Selamat Sore'; iconClass = 'fa-solid fa-cloud-sun';
-    } else {
-        greetingText = 'Selamat Malam'; iconClass = 'fa-solid fa-moon';
-    }
-
-    if (timeBadge) timeBadge.innerHTML = `<i class="${iconClass}"></i> ${greetingText}`;
-}
-
-// 2. Fitur Deteksi Lokasi API & Jadwal Sholat
-function initLocationAndPrayerTimes() {
-    const locationText = document.getElementById('location-text');
-    const prayerLocationSub = document.getElementById('prayer-location-sub');
-
-    let defaultLat = -7.3305;
-    let defaultLon = 110.5084;
-    let defaultCity = 'Salatiga';
-
-    async function getCityName(lat, lon) {
-        try {
-            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=id`);
-            const data = await response.json();
-            return data.city || data.locality || defaultCity;
-        } catch (err) {
-            return defaultCity;
-        }
-    }
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                const city = await getCityName(lat, lon);
-                updateLocationDisplay(city, locationText, prayerLocationSub);
-                fetchPrayerTimes(lat, lon);
-            },
-            (error) => {
-                console.log("Izin lokasi gagal/ditolak. Menggunakan lokasi default.");
-                updateLocationDisplay(defaultCity, locationText, prayerLocationSub);
-                fetchPrayerTimes(defaultLat, defaultLon);
-            },
-            { timeout: 8000 } 
-        );
-    } else {
-        updateLocationDisplay(defaultCity, locationText, prayerLocationSub);
-        fetchPrayerTimes(defaultLat, defaultLon);
-    }
-}
-
-function updateLocationDisplay(city, el1, el2) {
-    if (el1) el1.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${city}, Jawa Tengah`;
-    if (el2) el2.innerText = `Menampilkan waktu sholat presisi untuk wilayah ${city} dan sekitarnya.`;
-}
-
-async function fetchPrayerTimes(latitude, longitude) {
-    try {
-        const response = await fetch(`https://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=20`);
-        const data = await response.json();
-        
-        if (data && data.data && data.data.timings) {
-            const t = data.data.timings;
-            document.getElementById('time-subuh').innerText = t.Fajr + ' WIB';
-            document.getElementById('time-dzuhur').innerText = t.Dhuhr + ' WIB';
-            document.getElementById('time-ashar').innerText = t.Asr + ' WIB';
-            document.getElementById('time-maghrib').innerText = t.Maghrib + ' WIB';
-            document.getElementById('time-isya').innerText = t.Isha + ' WIB';
-        }
-    } catch (e) {
-        console.log('Gagal fetch jadwal sholat, gunakan default.');
-    }
-}
-
-// 3. Modal Pop-Up Jurusan
-function openJurusanModal(key) {
-    const item = dataJurusan[key];
-    if (!item) return;
-
-    const modalImg = document.getElementById('m-image');
-    if (item.foto) {
-        modalImg.src = item.foto;
-        modalImg.alt = `Foto Kegiatan ${item.title}`;
-        modalImg.style.display = 'block';
-    } else {
-        modalImg.style.display = 'none'; 
-    }
-
-    document.getElementById('m-icon').innerHTML = item.icon;
-    document.getElementById('m-title').innerText = item.title;
-    document.getElementById('m-subtitle').innerText = item.subtitle;
-    document.getElementById('m-desc').innerText = item.desc;
-
-    const listContainer = document.getElementById('m-prospects');
-    listContainer.innerHTML = '';
-    item.prospects.forEach(p => {
-        const li = document.createElement('li');
-        li.innerText = p;
-        listContainer.appendChild(li);
-    });
-
-    // Update link dan teks tombol pendaftaran secara bersih tanpa merusak struktur DOM
-    const modalDaftarBtn = document.getElementById('modalDaftarBtn');
-    const modalDaftarText = document.getElementById('modalDaftarText');
-    if (modalDaftarBtn) {
-        modalDaftarBtn.href = `pendaftaran.html?sekolah=${encodeURIComponent(item.title)}`;
-    }
-    if (modalDaftarText) {
-        modalDaftarText.textContent = `Daftar ${item.title} Ini`;
-    }
-
-    const modal = document.getElementById('jurusanModal');
-    if (modal) {
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-    }
-}
-
-function closeJurusanModal() {
-    const modal = document.getElementById('jurusanModal');
-    if (modal) {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-    }
-}
-
-// 4. FITUR DROPDOWN DOA HARIAN (Dengan Fallback System)
-let doaList = []; 
-
-async function initDoaDropdown() {
+async function initDoaHarian() {
     const dropdown = document.getElementById('doaDropdown');
-    
+    const nextBtn = document.getElementById('nextDuaBtn');
+    if (!dropdown) return;
+
+    let doaData = [...fallbackDoaList];
+
     try {
-        document.getElementById('dua-arabic').innerText = "Memuat...";
-        const response = await fetch('https://islamic-api-zhirrr.vercel.app/api/doaharian');
-        
-        if (!response.ok) throw new Error("API Sedang Down");
-        
-        const res = await response.json();
-        doaList = res.data; 
-        
-    } catch (error) {
-        console.warn('API Doa gagal dimuat. Beralih ke data cadangan lokal.');
-        doaList = dataDoaCadangan; 
+        const res = await fetch('https://equran.id/api/doa');
+        const json = await res.json();
+        const apiList = Array.isArray(json) ? json : json.data;
+        if (Array.isArray(apiList) && apiList.length > 0) {
+            doaData = apiList.map(item => ({
+                doa: item.nama || item.doa || 'Doa Harian',
+                ayat: item.ar || item.ayat || '',
+                latin: item.tr || item.latin || '',
+                artinya: item.idn || item.artinya || ''
+            }));
+        }
+    } catch (err) {
+        console.warn('Menggunakan daftar doa lokal:', err);
     }
 
-    dropdown.innerHTML = '<option value="">-- Pilih Doa Harian --</option>';
-    doaList.forEach((doa, index) => {
-        const option = document.createElement('option');
-        option.value = index;
-        option.textContent = doa.title;
-        dropdown.appendChild(option);
+    const renderDoa = (index) => {
+        const item = doaData[index];
+        if (!item) return;
+        dropdown.value = String(index);
+        document.getElementById('dua-arabic').innerText = item.ayat;
+        document.getElementById('dua-latin').innerText = item.latin;
+        document.getElementById('dua-meaning').innerHTML = `<strong>Artinya:</strong> "${item.artinya}"`;
+    };
+
+    dropdown.innerHTML = doaData
+        .map((item, idx) => `<option value="${idx}">${item.doa}</option>`)
+        .join('');
+
+    dropdown.addEventListener('change', (e) => {
+        renderDoa(Number(e.target.value));
     });
 
-    dropdown.addEventListener('change', function() {
-        if (this.value !== "") {
-            tampilkanDoaPilihan(this.value);
-        }
-    });
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (doaData.length <= 1) return;
+            let randomIdx = Math.floor(Math.random() * doaData.length);
+            if (randomIdx === Number(dropdown.value)) {
+                randomIdx = (randomIdx + 1) % doaData.length;
+            }
+            renderDoa(randomIdx);
+        });
+    }
 
-    acakDoa();
+    renderDoa(0);
 }
 
-function tampilkanDoaPilihan(index) {
-    if (doaList.length === 0) return;
-    
-    const doa = doaList[index];
-    document.getElementById('dua-arabic').innerText = doa.arabic || "Memuat...";
-    document.getElementById('dua-latin').innerText = doa.latin ? doa.latin : "";
-    document.getElementById('dua-meaning').innerHTML = `<strong>Artinya:</strong> "${doa.translation || ''}"`;
-}
-
-function acakDoa() {
-    if (doaList.length === 0) return;
-    
-    const randomIdx = Math.floor(Math.random() * doaList.length);
-    const dropdown = document.getElementById('doaDropdown');
-    
-    dropdown.value = randomIdx; 
-    tampilkanDoaPilihan(randomIdx);
-}
-
-// 5. FITUR DUAL DROPDOWN AL-QUR'AN (Surat & Ayat)
-let currentSurahData = null; 
+// =========================================================================
+// 5. FITUR SEARCH AL-QUR'AN (SURAT & NAVIGASI PANAH KIRI-KANAN AYAT)
+// =========================================================================
+let daftarSuratList = [];
+let currentSurahData = null;
+let currentAyatIndex = 0;
+let activeSurahLabel = "1. Al-Fatihah (7)";
 
 async function initQuranDropdown() {
+    const searchInput = document.getElementById('quranSearchInput');
+    const resultsList = document.getElementById('quranSearchResults');
+    const searchWrapper = document.getElementById('quranSearchWrapper');
+    const prevAyatBtn = document.getElementById('prevAyatBtn');
+    const nextAyatBtn = document.getElementById('nextAyatBtn');
+
+    if (!searchInput || !resultsList) return;
+
+    // Set status awal tombol panah kiri nonaktif pada ayat ke-1
+    if (prevAyatBtn) prevAyatBtn.disabled = true;
+
+    // Pasang event klik tombol panah kiri (Ayat Sebelumnya)
+    if (prevAyatBtn) {
+        prevAyatBtn.addEventListener('click', () => {
+            if (currentSurahData && currentAyatIndex > 0) {
+                tampilkanAyatPilihan(currentAyatIndex - 1);
+            }
+        });
+    }
+
+    // Pasang event klik tombol panah kanan (Ayat Berikutnya)
+    if (nextAyatBtn) {
+        nextAyatBtn.addEventListener('click', () => {
+            if (currentSurahData && currentAyatIndex < currentSurahData.ayat.length - 1) {
+                tampilkanAyatPilihan(currentAyatIndex + 1);
+            }
+        });
+    }
+
     try {
-        const dropdown = document.getElementById('quranDropdown');
         const response = await fetch('https://equran.id/api/v2/surat');
         const { data } = await response.json();
-        
-        dropdown.innerHTML = '<option value="">-- Pilih Surat --</option>';
-        
-        data.forEach(surat => {
-            const option = document.createElement('option');
-            option.value = surat.nomor;
-            option.textContent = `${surat.nomor}. ${surat.namaLatin} (${surat.jumlahAyat})`;
-            dropdown.appendChild(option);
+        daftarSuratList = data;
+
+        const renderFilteredSurat = (keyword = '') => {
+            const normalize = (str) => str.toLowerCase().replace(/[-\s']/g, '');
+            const q = normalize(keyword);
+
+            const filtered = daftarSuratList.filter(surat =>
+                normalize(surat.namaLatin).includes(q) ||
+                normalize(surat.arti).includes(q) ||
+                String(surat.nomor).includes(keyword.trim())
+            );
+
+            resultsList.innerHTML = '';
+
+            if (filtered.length === 0) {
+                resultsList.innerHTML = '<li style="color:#94a3b8; cursor:default;">Surat tidak ditemukan</li>';
+                return;
+            }
+
+            filtered.forEach(surat => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span><strong>${surat.nomor}. ${surat.namaLatin}</strong></span>
+                    <span class="ayat-badge">${surat.jumlahAyat} ayat</span>
+                `;
+                li.addEventListener('click', () => {
+                    activeSurahLabel = `${surat.nomor}. ${surat.namaLatin} (${surat.jumlahAyat})`;
+                    searchInput.value = activeSurahLabel;
+                    resultsList.classList.remove('show');
+                    fetchAyatBySurat(surat.nomor);
+                });
+                resultsList.appendChild(li);
+            });
+        };
+
+        searchInput.addEventListener('focus', () => {
+            searchInput.value = '';
+            renderFilteredSurat('');
+            resultsList.classList.add('show');
         });
 
-        dropdown.addEventListener('change', function() {
-            if (this.value) fetchAyatBySurat(this.value);
+        searchInput.addEventListener('input', (e) => {
+            renderFilteredSurat(e.target.value);
+            resultsList.classList.add('show');
         });
 
-        dropdown.value = 1;
-        fetchAyatBySurat(1);
+        document.addEventListener('click', (e) => {
+            if (searchWrapper && !searchWrapper.contains(e.target)) {
+                resultsList.classList.remove('show');
+                searchInput.value = activeSurahLabel;
+            }
+        });
+
+        searchInput.value = activeSurahLabel;
+        await fetchAyatBySurat(1);
+
     } catch (error) {
         console.error('Gagal memuat daftar surat', error);
     }
@@ -364,26 +340,13 @@ async function initQuranDropdown() {
 async function fetchAyatBySurat(nomorSurat) {
     try {
         document.getElementById('quran-arabic').innerText = "Memuat ayat...";
-        
-        const ayatDropdown = document.getElementById('ayatDropdown');
-        ayatDropdown.innerHTML = '<option value="">...</option>';
-        
+
         const response = await fetch(`https://equran.id/api/v2/surat/${nomorSurat}`);
         const { data } = await response.json();
-        
-        currentSurahData = data; 
-        
-        ayatDropdown.innerHTML = '';
-        for (let i = 0; i < data.jumlahAyat; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = `Ayat ${i + 1}`;
-            ayatDropdown.appendChild(option);
-        }
 
-        ayatDropdown.value = 0;
+        currentSurahData = data;
         tampilkanAyatPilihan(0);
-        
+
     } catch (error) {
         console.error('Gagal memuat ayat', error);
         document.getElementById('quran-arabic').innerText = "Gagal memuat ayat.";
@@ -391,7 +354,20 @@ async function fetchAyatBySurat(nomorSurat) {
 }
 
 function tampilkanAyatPilihan(index) {
-    if (!currentSurahData) return;
+    if (!currentSurahData || !currentSurahData.ayat[index]) return;
+
+    currentAyatIndex = index;
+    const totalAyat = currentSurahData.ayat.length;
+
+    const ayatCurrent = document.getElementById('ayatCurrent');
+    const ayatTotal = document.getElementById('ayatTotal');
+    const prevAyatBtn = document.getElementById('prevAyatBtn');
+    const nextAyatBtn = document.getElementById('nextAyatBtn');
+
+    if (ayatCurrent) ayatCurrent.innerText = index + 1;
+    if (ayatTotal) ayatTotal.innerText = `/ ${totalAyat}`;
+    if (prevAyatBtn) prevAyatBtn.disabled = index === 0;
+    if (nextAyatBtn) nextAyatBtn.disabled = index >= totalAyat - 1;
 
     const ayat = currentSurahData.ayat[index];
     document.getElementById('quran-arabic').innerText = ayat.teksArab;
@@ -399,33 +375,126 @@ function tampilkanAyatPilihan(index) {
     document.getElementById('quran-meaning').innerHTML = `<strong>Ayat ke-${ayat.nomorAyat}:</strong> "${ayat.teksIndonesia}"`;
 }
 
-// 6. Event Listeners Keseluruhan & Aksesibilitas
-function setupEventListeners() {
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-    
-    // Toggle menu mobile dengan atribut aksesibilitas
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', () => {
-            const isOpen = navMenu.classList.toggle('show');
-            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
+// =========================================================================
+// 6. MODAL DETAIL JENJANG PENDIDIKAN
+// =========================================================================
+const lembagaDetails = {
+    SMK: {
+        title: "SMK Syubbanul Wathon",
+        subtitle: "Sekolah Menengah Kejuruan Berbasis Pesantren",
+        image: "assets/fotosmk/IMG_0061-scaled.jpg",
+        icon: "fa-laptop-code",
+        desc: "Menyelenggarakan pendidikan vokasi unggulan dengan kompetensi keahlian Rekayasa Perangkat Lunak (RPL), Teknik Komputer & Jaringan (TKJ), Desain Komunikasi Visual (DKV), serta Tata Busana yang terintegrasi dengan nilai-nilai pesantren.",
+        prospects: [
+            "Software Developer, Web & Mobile Programmer",
+            "Network Administrator & IT Support Industri",
+            "Desainer Grafis, Animator & Kreator Konten Digital",
+            "Wirausaha Mandiri & Melanjutkan Kuliah Vokasi/Sarjana"
+        ]
+    },
+    SMA: {
+        title: "SMA Syubbanul Wathon",
+        subtitle: "Sekolah Menengah Atas Unggulan Sains & Sosial",
+        image: "assets/fotosmk/IMG_3537-2048x1365.jpg",
+        icon: "fa-atom",
+        desc: "Memadukan kurikulum nasional dengan pembinaan olimpiade sains, penguatan bahasa asing (Arab & Inggris), serta bimbingan intensif persiapan masuk Perguruan Tinggi Negeri (PTN) dan Timur Tengah.",
+        prospects: [
+            "Melanjutkan ke PTN Favorit (SNBP / SNBT)",
+            "Beasiswa Studi Luar Negeri & Timur Tengah",
+            "Akademisi, Peneliti & Tenaga Profesional",
+            "Pemimpin Masyarakat Berkarakter Santri"
+        ]
+    },
+    SMP: {
+        title: "SMP Syubbanul Wathon",
+        subtitle: "Sekolah Menengah Pertama Terpadu",
+        image: "assets/foto m/DSC04055-min-1024x683.jpg",
+        icon: "fa-book-open",
+        desc: "Membentuk fondasi karakter islami sejak dini melalui pembiasaan ibadah harian, program Tahfidz Al-Qur'an Juz 30, literasi sains, serta penguasaan dasar teknologi informasi.",
+        prospects: [
+            "Hafalan Al-Qur'an Terjaga & Berakhlakul Karimah",
+            "Siap Melanjutkan ke Jenjang SMA/SMK/MA Unggulan",
+            "Kompetitif dalam Olimpiade Sains & Bahasa"
+        ]
+    },
+    MA: {
+        title: "MA Syubbanul Wathon",
+        subtitle: "Madrasah Aliyah Keagamaan, MIPA & IPS",
+        image: "assets/foto m/jurnalistik.jpg",
+        icon: "fa-mosque",
+        desc: "Pendidikan tingkat menengah atas berciri khas Islam dengan pendalaman kajian kitab kuning (turats), ilmu tafsir-hadits, serta peminatan MIPA dan IPS berstandar nasional.",
+        prospects: [
+            "Melanjutkan ke UIN, PTKIN & Universitas Al-Azhar Kairo",
+            "Kader Ulama Muda, Dai & Pendidik Islam",
+            "Profesional di Bidang Hukum Syariah & Ekonomi Islam"
+        ]
+    },
+    MTs: {
+        title: "MTs Syubbanul Wathon",
+        subtitle: "Madrasah Tsanawiyah Berbasis Asrama",
+        image: "assets/foto m/DSC08087-min-1024x683.jpg",
+        icon: "fa-kaaba",
+        desc: "Menekankan penguasaan dasar ilmu alat (Nahwu & Shorof), praktik ibadah fiqih sehari-hari, percakapan Bahasa Arab dan Inggris, serta mata pelajaran umum madrasah.",
+        prospects: [
+            "Mampu Membaca & Memahami Kitab Kuning Dasar",
+            "Terampil Berbahasa Arab & Inggris Aktif",
+            "Fondasi Kuat Menuju Madrasah Aliyah atau SMA/SMK"
+        ]
+    }
+};
 
-        // Menutup menu mobile otomatis saat salah satu link diklik
-        const navLinks = navMenu.querySelectorAll('a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navMenu.classList.contains('show')) {
-                    navMenu.classList.remove('show');
-                    navToggle.setAttribute('aria-expanded', 'false');
-                }
-            });
+window.openJurusanModal = function (kode) {
+    const modal = document.getElementById('jurusanModal');
+    const data = lembagaDetails[kode];
+    if (!modal || !data) return;
+
+    const imgEl = document.getElementById('m-image');
+    if (imgEl) {
+        if (data.image) {
+            imgEl.src = data.image;
+            imgEl.style.display = 'block';
+        } else {
+            imgEl.style.display = 'none';
+        }
+    }
+
+    document.getElementById('m-icon').innerHTML = `<i class="fa-solid ${data.icon}"></i>`;
+    document.getElementById('m-title').innerText = data.title;
+    document.getElementById('m-subtitle').innerText = data.subtitle;
+    document.getElementById('m-desc').innerText = data.desc;
+
+    const prospectsList = document.getElementById('m-prospects');
+    prospectsList.innerHTML = data.prospects.map(item => `<li>${item}</li>`).join('');
+
+    const daftarBtn = document.getElementById('modalDaftarBtn');
+    const daftarText = document.getElementById('modalDaftarText');
+    if (daftarBtn) daftarBtn.href = `pendaftaran.html?jenjang=${encodeURIComponent(kode)}`;
+    if (daftarText) daftarText.innerText = `Daftar ${kode}`;
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+};
+
+window.closeJurusanModal = function () {
+    const modal = document.getElementById('jurusanModal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+};
+
+function initJurusanCardsKeyboard() {
+    const modal = document.getElementById('jurusanModal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeJurusanModal();
         });
     }
 
-    // Dukungan navigasi keyboard (Enter / Space) untuk kartu jurusan
-    const jurusanCards = document.querySelectorAll('.jurusan-card');
-    jurusanCards.forEach(card => {
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeJurusanModal();
+    });
+
+    document.querySelectorAll('.jurusan-card').forEach(card => {
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -433,42 +502,27 @@ function setupEventListeners() {
             }
         });
     });
+}
 
-    const nextDuaBtn = document.getElementById('nextDuaBtn');
-    if (nextDuaBtn) nextDuaBtn.addEventListener('click', acakDoa);
+// =========================================================================
+// 7. SLIDER GALERI KEGIATAN SANTRI
+// =========================================================================
+function initGallerySlider() {
+    const container = document.getElementById('galleryContainer');
+    const slideLeft = document.getElementById('slideLeft');
+    const slideRight = document.getElementById('slideRight');
 
-    const ayatDropdown = document.getElementById('ayatDropdown');
-    if (ayatDropdown) {
-        ayatDropdown.addEventListener('change', function() {
-            if (this.value !== "") tampilkanAyatPilihan(this.value);
+    if (!container) return;
+
+    if (slideLeft) {
+        slideLeft.addEventListener('click', () => {
+            container.scrollBy({ left: -340, behavior: 'smooth' });
         });
     }
 
-    const slideLeftBtn = document.getElementById('slideLeft');
-    const slideRightBtn = document.getElementById('slideRight');
-    const galleryContainer = document.getElementById('galleryContainer');
-
-    if (slideLeftBtn && slideRightBtn && galleryContainer) {
-        slideLeftBtn.addEventListener('click', () => {
-            galleryContainer.scrollBy({ left: -340, behavior: 'smooth' });
-        });
-        slideRightBtn.addEventListener('click', () => {
-             galleryContainer.scrollBy({ left: 340, behavior: 'smooth' });
+    if (slideRight) {
+        slideRight.addEventListener('click', () => {
+            container.scrollBy({ left: 340, behavior: 'smooth' });
         });
     }
-    
-    // Tutup modal jika klik di area latar belakang (overlay)
-    window.addEventListener('click', (e) => {
-        const modal = document.getElementById('jurusanModal');
-        if (e.target === modal) {
-            closeJurusanModal();
-        }
-    });
-
-    // Tutup modal saat tombol Escape (ESC) ditekan
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeJurusanModal();
-        }
-    });
 }

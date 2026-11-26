@@ -13,7 +13,7 @@
     --text-color: #334155;
     --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
     --radius: 12px;
-    --transition: all 0.3s ease;
+    --transition: all 0.25s ease;
 }
 
 body.theme-day {
@@ -27,6 +27,26 @@ body.theme-day {
     box-sizing: border-box;
     font-family: 'Plus Jakarta Sans', sans-serif;
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hilangkan outline bawaan browser saat elemen diklik */
+a:focus,
+a:focus-visible,
+button:focus,
+button:focus-visible,
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+summary:focus,
+summary:focus-visible,
+[tabindex]:focus,
+[tabindex]:focus-visible {
+    outline: none;
+    box-shadow: none;
 }
 
 .container {
@@ -92,6 +112,11 @@ body.theme-day {
     gap: 12px;
     text-decoration: none;
     color: inherit;
+    transition: var(--transition);
+}
+
+.brand:active {
+    transform: scale(0.98);
 }
 
 .brand-logo {
@@ -130,11 +155,18 @@ body.theme-day {
     color: var(--text-color);
     font-weight: 600;
     font-size: 0.95rem;
+    padding: 4px 6px;
+    border-radius: 6px;
     transition: var(--transition);
 }
 
 .nav-link:hover, .nav-link.active {
     color: var(--primary);
+}
+
+.nav-link:active {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
 }
 
 .btn-primary {
@@ -157,6 +189,13 @@ body.theme-day {
     transform: translateY(-2px);
 }
 
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: var(--primary-dark);
+    transform: scale(0.97);
+    box-shadow: none;
+}
+
 .btn-secondary {
     background-color: var(--gray-200);
     color: var(--gray-800);
@@ -165,6 +204,18 @@ body.theme-day {
     border: none;
     cursor: pointer;
     font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background-color: #cbd5e1;
+}
+
+.btn-secondary:active,
+.btn-secondary:focus {
+    background-color: #cbd5e1;
+    transform: scale(0.97);
+    box-shadow: none;
 }
 
 .nav-toggle {
@@ -174,11 +225,19 @@ body.theme-day {
     font-size: 1.5rem;
     color: var(--text-color);
     cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.nav-toggle:active {
+    background-color: var(--gray-100);
+    color: var(--primary);
+    transform: scale(0.95);
 }
 
 .hero {
     padding: 120px 0 90px;
-    /* Mengubah overlay menjadi lapisan hitam/gelap transparan */
     background: linear-gradient(rgba(158, 160, 165, 0.65), rgba(67, 69, 73, 0.75)), 
                 url('assets/10-scaled-compresed.jpg'); 
     background-size: cover;       
@@ -199,8 +258,8 @@ body.theme-day {
 }
 
 .hero-title {
-    color: #ffffff; /* Ubah warna teks judul menjadi putih bersih */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Ubah bayangan teks menjadi gelap */
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     font-size: 2.8rem;
     font-weight: 800;
     line-height: 1.25;
@@ -212,8 +271,8 @@ body.theme-day {
 
 .hero-desc {
     font-size: 1.1rem;
-    color: #f1f5f9; /* Ubah warna deskripsi menjadi abu-abu terang */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Ubah bayangan teks menjadi gelap */
+    color: #f1f5f9;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     max-width: 700px;
     margin: 0 auto 35px;
     line-height: 1.6;
@@ -234,7 +293,19 @@ body.theme-day {
     text-decoration: none;
     font-weight: 700;
     font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+    transition: var(--transition);
+}
+
+.btn-primary-lg:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-primary-lg:active,
+.btn-primary-lg:focus {
+    background-color: var(--primary-dark);
+    transform: scale(0.97);
+    box-shadow: none;
 }
 
 .btn-outline-lg {
@@ -246,7 +317,6 @@ body.theme-day {
     text-decoration: none;
     font-weight: 800;
     font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
     transition: var(--transition);
 }
 
@@ -254,6 +324,15 @@ body.theme-day {
     background-color: var(--primary);
     color: #ffffff;                 
     transform: translateY(-2px);
+}
+
+.btn-outline-lg:active,
+.btn-outline-lg:focus {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: #ffffff;
+    transform: scale(0.97);
+    box-shadow: none;
 }
 
 .section {
@@ -354,17 +433,30 @@ body.theme-day {
     cursor: pointer;
     color: var(--text-color);
     font-weight: 600;
+    transition: var(--transition);
 }
 
 .btn-icon:hover {
     background-color: var(--gray-100);
+    border-color: var(--primary);
+    color: var(--primary-dark);
 }
 
+.btn-icon:active,
+.btn-icon:focus {
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary-dark);
+    transform: scale(0.96);
+    box-shadow: none;
+}
+
+/* Dropdown Doa Harian & Input Search Surat */
 .dua-dropdown {
     width: 100%;
     max-width: 250px;
     padding: 8px 12px;
-    border: 1px solid var(--primary);
+    border: 1.5px solid var(--primary);
     border-radius: 8px;
     background-color: var(--primary-light);
     color: var(--primary-dark);
@@ -376,13 +468,170 @@ body.theme-day {
     transition: var(--transition);
 }
 
-.dua-dropdown:focus {
-    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+.dua-dropdown:focus,
+.dua-dropdown:active {
+    background-color: #ffffff;
+    border-color: var(--primary-dark);
+    box-shadow: none;
 }
 
 .quran-box .dua-dropdown {
-    background-color: rgba(13, 148, 136, 0.15); 
+    background-color: rgba(13, 148, 136, 0.12); 
     color: var(--primary-dark);
+}
+
+/* ==========================================
+   SEARCH SURAT & NAVIGASI PANAH AYAT (TANPA SHADOW)
+   ========================================== */
+.quran-header {
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.quran-search-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 190px;
+}
+
+.quran-box .quran-search-input {
+    max-width: 100%;
+    cursor: text;
+}
+
+.quran-box .quran-search-input:focus,
+.quran-box .quran-search-input:active {
+    background-color: #ffffff;
+    border-color: var(--primary-dark);
+    box-shadow: none;
+}
+
+/* Daftar saran pencarian surat yang muncul saat diklik */
+.quran-search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    min-width: 260px;
+    max-height: 240px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1.5px solid var(--primary);
+    border-radius: 10px;
+    box-shadow: none;
+    list-style: none;
+    padding: 6px;
+    z-index: 100;
+}
+
+.quran-search-results.show {
+    display: block;
+    animation: fadeIn 0.18s ease;
+}
+
+.quran-search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.quran-search-results::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 10px;
+}
+
+.quran-search-results li {
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--gray-800);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.quran-search-results li:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.quran-search-results li:active {
+    background-color: var(--primary);
+    color: #ffffff;
+    transform: scale(0.98);
+}
+
+.quran-search-results li:active .ayat-badge {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+.quran-search-results li .ayat-badge {
+    font-size: 0.75rem;
+    background-color: var(--gray-100);
+    color: var(--gray-600);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* Kotak navigasi panah kiri-kanan ayat */
+.ayat-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border: 1.5px solid var(--primary);
+    border-radius: 8px;
+    background-color: rgba(13, 148, 136, 0.12);
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.ayat-display {
+    min-width: 72px;
+    text-align: center;
+}
+
+.ayat-display span {
+    font-size: 0.82rem;
+    color: var(--gray-600);
+    font-weight: 600;
+}
+
+.ayat-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary-dark);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.ayat-nav-btn:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+.ayat-nav-btn:active:not(:disabled) {
+    background-color: var(--primary-dark);
+    color: #ffffff;
+    transform: scale(0.92);
+    box-shadow: none;
+}
+
+.ayat-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
 }
 
 .dua-arabic {
@@ -459,25 +708,32 @@ body.theme-day {
     color: var(--primary);
     text-decoration: none;
     font-weight: 700;
+    transition: var(--transition);
+}
+
+.btn-link:hover {
+    color: var(--primary-dark);
+}
+
+.btn-link:active {
+    transform: translateX(3px);
 }
 
 .jurusan-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 25px;
-    align-items: stretch; /* Memaksa semua kartu memiliki tinggi yang sama */
+    align-items: stretch;
 }
 
 .jurusan-card {
     background-color: var(--card-bg);
     border-radius: var(--radius);
     padding: 28px;
-    border: 1px solid var(--gray-200);
+    border: 1.5px solid var(--gray-200);
     box-shadow: var(--shadow);
     cursor: pointer;
     transition: var(--transition);
-
-    /* Tambahkan ini agar footer kartu tetap rata di bawah */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -488,6 +744,15 @@ body.theme-day {
     transform: translateY(-6px);
     border-color: var(--primary);
     box-shadow: 0 15px 30px rgba(13, 148, 136, 0.15);
+}
+
+/* Efek klik kartu jurusan tanpa shadow */
+.jurusan-card:active,
+.jurusan-card:focus {
+    border-color: var(--primary-dark);
+    background-color: #f0fdfa;
+    transform: scale(0.98);
+    box-shadow: none;
 }
 
 .jurusan-card-header {
@@ -569,6 +834,20 @@ body.theme-day {
     border: none;
     cursor: pointer;
     color: var(--gray-600);
+    line-height: 1;
+    padding: 4px 10px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    background-color: var(--gray-100);
+    color: var(--dark);
+}
+
+.modal-close:active {
+    background-color: var(--gray-200);
+    transform: scale(0.92);
 }
 
 .modal-icon {
@@ -648,6 +927,12 @@ body.theme-day {
 .footer-col a {
     color: #94a3b8;
     text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-col a:hover,
+.footer-col a:active {
+    color: #ffffff;
 }
 
 .footer-bottom {
@@ -743,7 +1028,7 @@ body.theme-day {
 
 .gallery-btn {
     background-color: var(--card-bg);
-    border: 1px solid var(--gray-200);
+    border: 1.5px solid var(--gray-200);
     color: var(--primary);
     width: 50px;
     height: 50px;
@@ -761,7 +1046,17 @@ body.theme-day {
 
 .gallery-btn:hover {
     background-color: var(--primary);
+    border-color: var(--primary);
     color: white;
+}
+
+.gallery-btn:active,
+.gallery-btn:focus {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: white;
+    transform: scale(0.94);
+    box-shadow: none;
 }
 
 .gallery-btn.left { left: -25px; }
@@ -771,12 +1066,10 @@ body.theme-day {
     .gallery-btn { display: none; }
 }
 
-
 /* Perbaikan Khusus Mobile (Layar HP) */
 @media (max-width: 768px) {
-    /* 1. Merapikan Top Bar (Jam, Lokasi, Kontak) */
     .top-bar-content {
-        flex-direction: column; /* Mengubah susunan menjadi vertikal/ke bawah */
+        flex-direction: column;
         justify-content: center;
         text-align: center;
         gap: 8px;
@@ -789,26 +1082,25 @@ body.theme-day {
     }
     
     .divider {
-        display: none; /* Menyembunyikan garis pemisah vertikal "|" di layar sempit */
+        display: none;
     }
 
-    /* 2. Merapikan Judul Syubbanul Wathon di Navbar */
     .brand {
-        max-width: 85%; /* Membatasi lebar agar tidak menabrak tombol menu */
+        max-width: 85%;
     }
     
     .brand-title {
-        font-size: 1rem; /* Mengecilkan teks judul utama */
+        font-size: 1rem;
     }
     
     .brand-sub {
-        font-size: 0.65rem; /* Mengecilkan teks sub-judul */
-        white-space: normal; /* Mengizinkan teks turun ke baris baru jika terlalu panjang */
+        font-size: 0.65rem;
+        white-space: normal;
         line-height: 1.2;
     }
     
     .brand-logo {
-        width: 35px; /* Mengecilkan logo sedikit */
+        width: 35px;
         height: 35px;
     }
 }
@@ -839,7 +1131,7 @@ body.theme-day {
 
 .berita-badge {
     display: inline-block;
-    background-color: rgba(234, 88, 12, 0.15); /* Orange pudar */
+    background-color: rgba(234, 88, 12, 0.15);
     color: #ea580c;
     padding: 4px 12px;
     border-radius: 20px;
@@ -850,12 +1142,12 @@ body.theme-day {
 }
 
 .berita-badge.badge-kegiatan {
-    background-color: rgba(13, 148, 136, 0.15); /* Hijau pudar */
+    background-color: rgba(13, 148, 136, 0.15);
     color: var(--primary-dark);
 }
 
 .berita-badge.badge-akademik {
-    background-color: rgba(37, 99, 235, 0.15); /* Biru pudar */
+    background-color: rgba(37, 99, 235, 0.15);
     color: #2563eb;
 }
 
@@ -913,11 +1205,10 @@ body.theme-day {
 /* FAQ Akordion Styles */
 .faq-item {
     background-color: var(--card-bg);
-    border: 1px solid var(--gray-200);
+    border: 1.5px solid var(--gray-200);
     border-radius: 8px;
     margin-bottom: 12px;
     padding: 16px 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
     transition: var(--transition);
 }
 
@@ -932,10 +1223,17 @@ body.theme-day {
     color: var(--dark);
     font-size: 1rem;
     outline: none;
-    list-style: none; /* Menghilangkan panah bawaan browser di beberapa platform */
+    list-style: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    user-select: none;
+    transition: var(--transition);
+}
+
+.faq-item summary:active {
+    color: var(--primary-dark);
+    transform: scale(0.99);
 }
 
 .faq-item summary::after {
@@ -1071,7 +1369,6 @@ body.theme-day {
     margin-top: 3px;
 }
 
-/* Responsif Layar HP */
 @media (max-width: 768px) {
     .maps-grid {
         grid-template-columns: 1fr;
@@ -1153,10 +1450,8 @@ body.theme-day {
 
 /* =========================================================================
    KOMENTAR (REFAKTORISASI CSS & KOMPONEN FORMULIR):
-   Kumpulan kelas berikut dibuat untuk menggantikan tumpukan inline styles (style="...")
-   pada formulir pendaftaran santri baru (pendaftaran.html), mendukung tata letak grid
-   responsif 1-2 kolom, komponen kotak unggah berkas, modal dialog notifikasi elegan,
-   serta focus outline ramah aksesibilitas (a11y).
+   Kumpulan kelas berikut dibuat untuk formulir pendaftaran santri baru
+   (pendaftaran.html) dengan efek klik & fokus bersih tanpa shadow.
    ========================================================================= */
 .form-section {
     padding: 50px 0;
@@ -1209,10 +1504,14 @@ body.theme-day {
 }
 
 .form-control:focus,
+.form-control:active,
 .form-select:focus,
-.form-textarea:focus {
+.form-select:active,
+.form-textarea:focus,
+.form-textarea:active {
     border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
+    background-color: #f0fdfa;
+    box-shadow: none;
     outline: none;
 }
 
@@ -1317,14 +1616,19 @@ body.theme-day {
     gap: 10px;
     background-color: var(--primary);
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25);
     transition: var(--transition);
 }
 
 .form-submit-btn:hover {
     background-color: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.35);
+}
+
+.form-submit-btn:active,
+.form-submit-btn:focus {
+    background-color: var(--primary-dark);
+    transform: scale(0.98);
+    box-shadow: none;
 }
 
 /* ==========================================
@@ -1364,20 +1668,6 @@ body.theme-day {
 @keyframes scaleIn {
     from { opacity: 0; transform: scale(0.92); }
     to { opacity: 1; transform: scale(1); }
-}
-
-/* ==========================================
-   ACCESSIBILITY & FOCUS OUTLINE ENHANCEMENT
-   ========================================== */
-:focus-visible {
-    outline: 2.5px solid var(--primary);
-    outline-offset: 2px;
-}
-
-.jurusan-card:focus-visible {
-    outline: 3px solid var(--primary);
-    outline-offset: 3px;
-    transform: translateY(-4px);
 }
 
 @media (max-width: 768px) {
